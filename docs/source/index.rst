@@ -9,6 +9,7 @@ Overview
 --------
 
 EpigeneticButton is a comprehensive pipeline that processes and analyzes multiple types of genomics data. It provides an automated workflow for:
+
 - Data preprocessing and quality control
 - Read mapping and alignment
 - Peak calling and differential expression analysis
