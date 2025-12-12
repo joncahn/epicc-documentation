@@ -40,7 +40,7 @@ Features
   - Resource management
   - Parallel processing
 
-## Contents
+Contents
 --------
 
 .. toctree::
