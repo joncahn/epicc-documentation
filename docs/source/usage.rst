@@ -5,9 +5,10 @@ Running the pipeline
 ----------------
 
 1. To run the pipeline locally:
-```bash
-snakemake --use-conda --conda-frontend conda --cores 12
-```
+.. code-block:: console
+
+  snakemake --use-conda --conda-frontend conda --cores 12
+
 
 2. To run the pipeline on a HPC-slurm (using sbatch):
 ```bash
