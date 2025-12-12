@@ -1,19 +1,44 @@
-Welcome to Lumache's documentation!
+Welcome to EPICC documentation!
 ===================================
+# Epigenetic Pipeline for Integrative Chromatin Characterization (EPICC) 
+# aka Epigenetic Button
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+A Snakemake-based pipeline for analyzing and integrating various types of (epi)genomics datasets, including histone and transcription factor ChIP-seq, RNA-seq, RAMPAGE, small RNA-seq, and methylC-seq.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+## Overview
 
-.. note::
+EpigeneticButton is a comprehensive pipeline that processes and analyzes multiple types of genomics data. It provides an automated workflow for:
+- Data preprocessing and quality control
+- Read mapping and alignment
+- Peak calling and differential expression analysis
+- Data integration and visualization
 
-   This project is under active development.
+## Features
 
-Contents
+- **Multiple Data Types Support**:
+  - Histone ChIP-seq
+  - Transcription Factor ChIP-seq
+  - RNA-seq
+  - small RNA-seq
+  - MethylC-seq (mC)
+  - RAMPAGE *\*in development*
+
+- **Automated Analysis**:
+  - Reference genome preparation
+  - Sample-specific processing
+  - Data type-specific analysis
+  - Combined analysis across samples
+  - Quality control and reporting
+  - Additional output options such as heatmaps, metaplots and browsers
+
+- **Flexible Configuration**:
+  - [App](https://epicc-builder.streamlit.app/) to validate configuration options
+  - Customizable mapping parameters
+  - Configurable analysis options
+  - Resource management
+  - Parallel processing
+
+## Contents
 --------
 
 .. toctree::
