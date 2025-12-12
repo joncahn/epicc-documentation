@@ -5,6 +5,7 @@ Running the pipeline
 ----------------
 
 1. To run the pipeline locally:
+
 .. code-block:: console
 
   snakemake --use-conda --conda-frontend conda --cores 12
