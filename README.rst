@@ -1,9 +1,5 @@
-Template for the Read the Docs tutorial
+Documentation for the epigenetic button based on Read the Docs
 =======================================
 
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
-
-Read the tutorial here:
-
-https://docs.readthedocs.io/en/stable/tutorial/
+Link to documentation: https://epicc-documentation.readthedocs.io/en/latest/
+Link to EPICC github: https://github.com/joncahn/epigeneticbutton
