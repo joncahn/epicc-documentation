@@ -18,6 +18,7 @@ Features
 --------
 
 - **Multiple Data Types Support**:
+
   + Histone ChIP-seq
   + Transcription Factor ChIP-seq
   + RNA-seq
@@ -26,6 +27,7 @@ Features
   + RAMPAGE *\*in development*
 
 - **Automated Analysis**:
+
   + Reference genome preparation
   + Sample-specific processing
   + Data type-specific analysis
@@ -34,6 +36,7 @@ Features
   + Additional output options such as heatmaps, metaplots and browsers
 
 - **Flexible Configuration**:
+
   + App to validate configuration options: (https://epicc-builder.streamlit.app)
   + Customizable mapping parameters
   + Configurable analysis options
@@ -47,4 +50,3 @@ Contents
 
    installation
    usage
-   api
