@@ -50,4 +50,5 @@ Contents
 .. toctree::
 
    installation
+   configuration
    usage
