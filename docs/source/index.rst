@@ -1,7 +1,7 @@
 Welcome to EPICC documentation!
 ===================================
 Epigenetic Pipeline for Integrative Chromatin Characterization (EPICC) aka Epigenetic Button
---------
+--------------------------------------------------------------------------------------------
 
 A Snakemake-based pipeline for analyzing and integrating various types of (epi)genomics datasets, including histone and transcription factor ChIP-seq, RNA-seq, RAMPAGE, small RNA-seq, and methylC-seq.
 
@@ -20,29 +20,31 @@ Features
 
 - **Multiple Data Types Support**:
 
-  + Histone ChIP-seq
-  + Transcription Factor ChIP-seq
-  + RNA-seq
-  + small RNA-seq
-  + MethylC-seq (mC)
-  + RAMPAGE *\*in development*
+  - Histone ChIP-seq
+  - Transcription Factor ChIP-seq
+  - RNA-seq
+  - small RNA-seq
+  - MethylC-seq (mC)
+  - RAMPAGE *\*in development*
 
 - **Automated Analysis**:
 
-  + Reference genome preparation
-  + Sample-specific processing
-  + Data type-specific analysis
-  + Combined analysis across samples
-  + Quality control and reporting
-  + Additional output options such as heatmaps, metaplots and browsers
-
+  - Reference genome preparation  
+  - Sample-specific processing
+  - Data type-specific analysis
+  - Combined analysis across samples
+  - Quality control and reporting
+  - Additional output options such as heatmaps, metaplots and browsers
 - **Flexible Configuration**:
 
-  + App to validate configuration options: (https://epicc-builder.streamlit.app)
-  + Customizable mapping parameters
-  + Configurable analysis options
-  + Resource management
-  + Parallel processing
+  - App to validate configuration options: `epicc-builder`_ 
+
+  .. _epicc-builder: https://epicc-builder.streamlit.app
+
+  - Customizable mapping parameters
+  - Configurable analysis options
+  - Resource management
+  - Parallel processing
 
 Contents
 --------
