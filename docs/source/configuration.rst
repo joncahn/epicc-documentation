@@ -40,6 +40,14 @@ Prepare your sample metadata file (default to ``config/all_samples.tsv``) with t
       Reference genome name. Will need an entry in the configuration file.
 
 A template can be found on the `epicc-builder app <https://epicc-builder.streamlit.app/>`__ and you can use it to confirm that your entries follow the epxected patterns.
+A basic example is below (the header is only indicative, and should not be present on the actual file):
++-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
+| *data_type* | *line* | *tissue* | *sample_type* | *replicate* | *seq_id*   | *fastq_path* | *paired* | *ref_genome* |
++=============+========+==========+===============+=============+============+==============+==========+==============+
+|ChIP         | Col0   | WT       | IP            | Rep1        | wt_h3_ctrl | ./fastq/     | PE       | ColCEN       |
++-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
+|ChIP         | Col0   | WT       | H3K27ac       | Rep1        | wt_h3k27   | ./fastq/     | PE       | ColCEN       |
++-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
 
 2. Columns common to all types of samples
 ++++++++++++++++++++++++++++++++++++++++++
@@ -65,7 +73,9 @@ A template can be found on the `epicc-builder app <https://epicc-builder.streaml
 
 - Col9: *ref_genome*
 	Name of the reference genome to use for mapping (e.g ``tair10``). 
-  	For each reference genome, a corresponding fasta, gff and gtf files are required. It can be a full path (including the extension) or relative to the main repo folder. These files can be gzipped. For example, if your sample file has ``B73_NAM`` as a *ref_genome (Col9)*, there must be this entry in the config file: ::
+  	For each reference genome, a corresponding fasta, gff and gtf files are required. It can be a full path (including the extension) or relative to the main repo folder. These files can be gzipped. For example, if your sample file has ``B73_NAM`` as a *ref_genome (Col9)*, there must be this entry in the config file: 
+
+::
 
 	B73_NAM:
 		fasta_file: path/to/B73.fasta	# can be .fa(.gz) or .fasta(.gz)
@@ -78,8 +88,9 @@ The GTF file can be created from a GFF file with cufflinks ``gffread -T <gff_fil
 3. Columns specific to each data type
 ++++++++++++++++++++++++++++++++++++++
 
-   a. Histone ChIP-seq
-   
+   1. Histone ChIP-seq
+   ~~~~~~~~~~~~~~~~~~~
+
    - Col1: *data_type*
 		``ChIP`` or ``ChIP_<id>`` where ``<id>`` is an identifier to relate an IP sample to its corresponding input. Only necessary in case there are different inputs to be used for different IP samples that otherwise share the same *line (Col1)* and *tissue (Col2)* values.
    		For example: If you have H3K27ac IP samples which you want normalized to an H3 sample, and H4K16ac to be normalized to an H4 sample. Both H3 and H4 samples should be labeled ``Input`` in *sample_type (Col4*), so to differentiate them, use ``ChIP_H3`` and ``ChIP_H4`` for the *data_type* of these Inputs and for the H3K27ac and H4K16ac IPs, respectively.
@@ -87,30 +98,32 @@ The GTF file can be created from a GFF file with cufflinks ``gffread -T <gff_fil
 Example:
 
 +--------+------+----+---------+------+------------+----------+----+--------+
-|ChIP_H3 | Col0 | WT | H3K27ac | Rep1 | wt_k27     | ./fastq/ | PE | Tair10 |
+|ChIP_H3 | Col0 | WT | H3K27ac | Rep1 | wt_k27     | ./fastq/ | PE | ColCEN |
 +--------+------+----+---------+------+------------+----------+----+--------+
-|ChIP_H3 | Col0 | WT | IP      | Rep1 | wt_h3_ctrl | ./fastq/ | PE | Tair10 |
+|ChIP_H3 | Col0 | WT | IP      | Rep1 | wt_h3_ctrl | ./fastq/ | PE | ColCEN |
 +--------+------+----+---------+------+------------+----------+----+--------+
-|ChIP_H4 | Col0 | WT | H3K27ac | Rep1 | wt_h4k16   | ./fastq/ | PE | Tair10 |
+|ChIP_H4 | Col0 | WT | H3K27ac | Rep1 | wt_h4k16   | ./fastq/ | PE | ColCEN |
 +--------+------+----+---------+------+------------+----------+----+--------+
-|ChIP_H4 | Col0 | WT | IP      | Rep1 | wt_h4_ctrl | ./fastq/ | PE | Tair10 |
+|ChIP_H4 | Col0 | WT | IP      | Rep1 | wt_h4_ctrl | ./fastq/ | PE | ColCEN |
 +--------+------+----+---------+------+------------+----------+----+--------+
 
    - Col4: *sample_type*
-      Either ``Input`` to be used as a control (even if it is actually H3 or IgG pull-down), or the histone mark IP (e.g. H3K9me2). If the mark is not already listed in the config file ``chip_callpeaks: peaktype:``, add it to the desired category (either narrow or broad peaks).
+      Either ``Input`` to be used as a control (even if it is actually H3 or IgG pull-down), or the histone mark IP (e.g. ``H3K9me2``). If the mark is not already listed in the config file ``chip_callpeaks: peaktype:``, add it to the desired category (either narrow or broad peaks).
    
    - Option:
       Differential nucleosome sensitivity (DNS-seq) can be analyzed with ``ChIP`` *data_type*, using ``MNase`` for the light digest and ``Input`` for the heavy digest.
 
-   b. Transcription factor ChIP-seq
-   
-   - Col1: *data_type*
+   2. Transcription factor ChIP-seq
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	- Col1: *data_type*
       ``TF_<tf_name>`` where ``<tf_name>`` is the name of the transcirption factor (e.g. for ``TB1`` data, use ``TF_TB1``). This name should be identical for the IP and its input, and for all replicates. Multiple TFs can be analyzed in parallel, each having its own set of IP and Input samples e.g. ``TF_<name1>`` and ``TF_<name2>``.
    
-   - Col4: *sample_type*
+	- Col4: *sample_type*
       Either ``Input`` or ``IP``. This works for transcription factors with narrow peaks (default). Use ``IPb`` for broad peaks.
 
-   c. RNA-seq
+	3. RNA-seq
+	~~~~~~~~~~
 
    - Col1: *data_type*
       ``RNAseq``. No other options.
@@ -118,20 +131,22 @@ Example:
    - Col4: *sample_type*
       ``RNAseq``. No other options.
 
-   d. small RNA-seq
+	4. small RNA-seq
+	~~~~~~~~~~~~~~~~
 
-   - Col1: *data_type*
+	- Col1: *data_type*
       ``sRNA``. No other options.
 
-   - Col4: *sample_type*
+	- Col4: *sample_type*
       ``sRNA``. Can also be ``smallRNA`` or ``shRNA``. Does not change the analysis but it is used in file names.
 
-   e. Whole Genome DNA methylation
+	5. Whole Genome DNA methylation
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   - Col1: *data_type*
+	- Col1: *data_type*
       ``mC``. No other options.
 
-   - Col4: *sample_type*
+	- Col4: *sample_type*
       ``mC``. Can also be ``WGBS``, ``ONT``, ``Pico`` or ``EMseq``. Not yet relevant except for the file names, but will be used in future release to define the type of data.
 
 Configuration file
@@ -147,18 +162,19 @@ Update ``config/config.yaml`` with your paths and parameters:
   
   - Reference genome files 
       For each reference genome in the sample file (*ref_genome (Col9)*), enter the corresponding species, the full paths to a fasta file, a gene gff file, and a gene gtf file. Optionally, a path to a gaf file and gene info file can be given for Gene Ontology (GO) analysis (see `Extra outputs` and `Help GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ for more details), an annotation file (bed format) for transposable elements for TE-centered analysis, and a fasta file of structural RNAs to be depleted from small RNA data (see `Help Rfam <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_structural_RNAs_database_with_Rfam>`__ for more details).
+example: 
 
-	example: ::
+::
 
-		Tair10:
-			species: "thaliana"
-			fasta_file: path/to/ColCEN.fasta	# can be .fa(.gz) or .fasta(.gz)
-			gff_file: path/to/ColCEN.gff	# can be .gff*(.gz)
-			gtf_file: path/to/ColCEN.gtf	# can be .gtf(.gz)
-			gaf_file: "data/ColCEN_infoGO.tab.gz" # optional. can be gzipped or not.
-  			gene_info_file: "data/ColCEN_genes_info.tab.gz" # optional. can be gzipped or not.
-  			te_file: "path/to/ColCEN_TEs.bed.gz" # optional. can be gzipped or not.
-  			structural_rna_fafile: "path/to/ColCEN_structural_RNAs.fa.gz" # optional.
+	ColCEN:
+		species: "thaliana"
+		fasta_file: path/to/ColCEN.fasta	# can be .fa(.gz) or .fasta(.gz)
+		gff_file: path/to/ColCEN.gff	# can be .gff*(.gz)
+		gtf_file: path/to/ColCEN.gtf	# can be .gtf(.gz)
+		gaf_file: "data/ColCEN_infoGO.tab.gz" # optional. can be gzipped or not.
+  		gene_info_file: "data/ColCEN_genes_info.tab.gz" # optional. can be gzipped or not.
+  		te_file: "path/to/ColCEN_TEs.bed.gz" # optional. can be gzipped or not.
+  		structural_rna_fafile: "path/to/ColCEN_structural_RNAs.fa.gz" # optional.
 
   - Analysis parameters / options:
       Works with default parameter, but more details can be found below, on the `epicc-builder app <https://epicc-builder.streamlit.app/>`__, or directly commented on the ``config/config.yaml`` file for more customization.
@@ -166,72 +182,77 @@ Update ``config/config.yaml`` with your paths and parameters:
   - Species-specific parameters:
       For each species in the reference genomes used, the number to used for the STAR index and the size of the genome are required.
       the NCBI ID, genus and go_database are only required for gene ontology (GO) analysis, if the option has been selected (See `Help GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ for more details).
+example: 
 
-	  example: ::
+::
 
-			thaliana:
-    			star_index: "--genomeSAindexNbases 12"
-    		    genomesize: 1.3e8
-    		    ncbiID: "3702" 		# optional
-    		    genus: "Arabidopsis"	# optional
-    		    go_database: org.Athaliana.eg.db 	# optional
+	thaliana:
+    	star_index: "--genomeSAindexNbases 12"
+    	genomesize: 1.3e8
+    	ncbiID: "3702" 		# optional
+    	genus: "Arabidopsis"	# optional
+    	go_database: org.Athaliana.eg.db 	# optional
   
   - Resources allocation
    
 2. Output options
 ++++++++++++++++++
 
-a. Default parameters
+	1. Default parameters
+	~~~~~~~~~~~~~~~~~~~~~
 
-  - Full analysis: 
-      By default, a full analysis is performed form raw data to analysis plots. Change ``full_analysis`` in the config file.
+	- Full analysis: 
+		By default, a full analysis is performed form raw data to analysis plots. Change ``full_analysis`` in the config file.
   
-  - Limited QC output: 
-      By default, some QC options are not performed to limit the time and amount of output files. Change ``QC_option`` in the config file.
+	- Limited QC output: 
+		By default, some QC options are not performed to limit the time and amount of output files. Change ``QC_option`` in the config file.
 
-  - No Gene Ontology analysis: 
-      Due to the difficulty in automating building a GO database, this option is OFF by default. Change ``GO`` option in the config file. Please refer to Additional output options #2 below and `Help GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ before setting it to ``true`` as it requires 2 other files. These files are available for Arabidopsis thaliana (Tair10 / ColCEN assembly) and Maize B73 (v5 or NAM assembly) in the ``data`` folder.
+	- No Gene Ontology analysis: 
+		Due to the difficulty in automating building a GO database, this option is OFF by default. Change ``GO`` option in the config file. Please refer to Additional output options #2 below and `Help GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ before setting it to ``true`` as it requires 2 other files. These files are available for Arabidopsis thaliana (Tair10 / ColCEN assembly) and Maize B73 (v5 or NAM assembly) in the ``data`` folder.
 
-  - No TE analysis: 
-      By default, no analysis on transposable elements is performed. Change ``te_analysis`` in the config file.
+	- No TE analysis: 
+    	By default, no analysis on transposable elements is performed. Change ``te_analysis`` in the config file.
 
-  - For ChIP-seq: 
-      The default mapping parameters are bowtie2 ``--end-to-end`` default parameters. Other options are available in the config file ``chip_mapping_option``.
+	- For ChIP-seq: 
+    	The default mapping parameters are bowtie2 ``--end-to-end`` default parameters. Other options are available in the config file ``chip_mapping_option``.
 
-  - For sRNA-seq: 
-      The default is not based on Netflex v3 library preparation. If your data was made with this kit, an additional deduplication and read trimming is required. To turn it ON, change the ``netflex_v3_deduplication`` in the config file. See `Known issues #3` if you have mixed libraries.
+	- For sRNA-seq: 
+    	The default is not based on Netflex v3 library preparation. If your data was made with this kit, an additional deduplication and read trimming is required. To turn it ON, change the ``netflex_v3_deduplication`` in the config file. See `Known issues #3` if you have mixed libraries.
 
-      The default is not to filter structural RNAs prior to shortstack analysis. Change ``structural_rna_depletion`` in the config file.  While this step is recommended for small interfering RNA analysis, it requires a pre-build database of fasta files. Please refer to the `Help Rfam <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_structural_RNAs_database_with_Rfam>`__  before setting it to ``true``. This file is available for Maize in the ``data`` folder. 
+    	The default is not to filter structural RNAs prior to shortstack analysis. Change ``structural_rna_depletion`` in the config file.  While this step is recommended for small interfering RNA analysis, it requires a pre-build database of fasta files. Please refer to the `Help Rfam <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_structural_RNAs_database_with_Rfam>`__  before setting it to ``true``. This file is available for Maize in the ``data`` folder. 
 
-      The default is to only perform *de novo* micro RNA identification (``--dn_mirna`` argument in ShortStack). If you also want the known microRNAs, download the fasta file from `miRbase <https://www.mirbase.org>`__, filter it for your species of interest, and add to the ``srna_mapping_params`` entry in the config file ``--known_miRNAs <path/to/known_miRNA_file.fa>``.
+    	The default is to only perform *de novo* micro RNA identification (``--dn_mirna`` argument in ShortStack). If you also want the known microRNAs, download the fasta file from `miRbase <https://www.mirbase.org>`__, filter it for your species of interest, and add to the ``srna_mapping_params`` entry in the config file ``--known_miRNAs <path/to/known_miRNA_file.fa>``.
 
-b. Configuration Options
+	2. Configuration Options
+	~~~~~~~~~~~~~~~~~~~~~~~~
 
 	- Main output options
 
-         + ``full_analysis``: 
-            When ``false``, only the mapping and the bigwigs will occur. When ``true``, will also be performed: single-data analyses (e.g. peak calling for ChIP, differential expression for RNAseq, DMRs for mC) and combined analyses (e.g. Upset plots for ChIP/TF, heatmaps and metaplots on all genes).
+    	+ ``full_analysis``: When ``false``, only the mapping and the bigwigs will occur. When ``true``, will also be performed: single-data analyses (e.g. peak calling for ChIP, differential expression for RNAseq, DMRs for mC) and combined analyses (e.g. Upset plots for ChIP/TF, heatmaps and metaplots on all genes).
 
-         + ``te_analysis``: 
-            When ``true``, small RNA differential expression will be performed (if such data is available), as well as heatmaps and metaplots of all the samples. The name and path to the TE file in bed format must be filled in the config file for the corresponding reference genome. The name of the TEs (4th column of the bed file) must be unique.
+        + ``te_analysis``: When ``true``, small RNA differential expression will be performed (if such data is available), as well as heatmaps and metaplots of all the samples. The name and path to the TE file in bed format must be filled in the config file for the corresponding reference genome. The name of the TEs (4th column of the bed file) must be unique.
 
-         + ``QC_option``: When ``true``, runs fastQC on raw and trimmed fastq files.
+        + ``QC_option``: When ``true``, runs fastQC on raw and trimmed fastq files.
 
 	- ChIP Mapping Parameters
 
-         + ``default``: Standard mapping parameters
-         + ``repeat``: Centromere-specific mapping (more sensitive)
-         + ``repeatall``: Centromere mapping with relaxed MAPQ
-         + ``all``: Relaxed mapping parameters
+    	+ ``default``: Standard mapping parameters
+        + ``repeat``: Centromere-specific mapping (more sensitive)
+        + ``repeatall``: Centromere mapping with relaxed MAPQ
+        + ``all``: Relaxed mapping parameters
 
 	- DMRs parameters
 
-         + By default, DNA methylation data will be analyzed in all sequence contexts (CG, CHG and CHH, where H = A, T or C). The option for CG-only is under development.
-         + DMRs are called with the R package `DMRcaller <https://www.bioconductor.org/packages/release/bioc/html/DMRcaller.html>`__ (DOI: 10.18129/B9.bioc.DMRcaller) for CG, CHG and CHH and the following (stringent) parameters:
-	         - CG: ``method="noise-filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.3, minGap=200, minSize=50, minReadsPerCytosine=3``
-	         - CHG: ``method="noise_filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.2, minGap=200, minSize=50, minReadsPerCytosine=3``
-	         - CHH: ``method="bins", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.1, minGap=200, minSize=50, minReadsPerCytosine=3``
-         + Modify the script ``workflow/scripts/R_call_DMRs.R`` if other paramteres/contexts should be performed, or make a copy such as ``workflow/scripts/R_call_DMRs_custom.R`` and replace it in the rule ``call_DMRs_pairwise`` in the ``workflow/rules/mC.smk`` file.
+        + By default, DNA methylation data will be analyzed in all sequence contexts (CG, CHG and CHH, where H = A, T or C). The option for CG-only is under development.
+        + DMRs are called with the R package `DMRcaller <https://www.bioconductor.org/packages/release/bioc/html/DMRcaller.html>`__ (DOI: 10.18129/B9.bioc.DMRcaller) for CG, CHG and CHH and the following (stringent) parameters:
+
+::
+
+	-CG: method="noise-filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.3, minGap=200, minSize=50, minReadsPerCytosine=3	
+	-CHG: method="noise_filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.2, minGap=200, minSize=50, minReadsPerCytosine=3
+	-CHH: method="bins", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.1, minGap=200, minSize=50, minReadsPerCytosine=3
+        
+		+ Modify the script ``workflow/scripts/R_call_DMRs.R`` if other paramteres/contexts should be performed, or make a copy such as ``workflow/scripts/R_call_DMRs_custom.R`` and replace it in the rule ``call_DMRs_pairwise`` in the ``workflow/rules/mC.smk`` file.
 
 	- In-line customization of the parameters
 
@@ -248,13 +269,9 @@ For example, to only generate the plot of mapping statistics for the ChIP sample
 
 In addition to the additional output plots below, two rules can be specified as targets for intermediates outputs:
 
-   - ``map_only``: 
-      Only performs the alignement of all samples. It returns bam files, QC files and mapping metrics.
-      usage: ``snakemake --cores 1 map_only``
+	- ``map_only``: Only performs the alignement of all samples. It returns bam files, QC files and mapping metrics. Usage: ``snakemake --cores 1 map_only``
 
-   - ``coverage_chip``: 
-      Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``).
-      usage: ``snakemake --cores 1 coverage_chip``
+	- ``coverage_chip``: Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``). Usage: ``snakemake --cores 1 coverage_chip``
 
 Resources and Profiles
 -----------------------
