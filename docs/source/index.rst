@@ -35,12 +35,10 @@ Features
   - Combined analysis across samples
   - Quality control and reporting
   - Additional output options such as heatmaps, metaplots and browsers
+
 - **Flexible Configuration**:
 
-  - App to validate configuration options: `epicc-builder`_ 
-
-  .. _epicc-builder: https://epicc-builder.streamlit.app
-
+  - App to validate configuration options: `epicc-builder <https://epicc-builder.streamlit.app>`__
   - Customizable mapping parameters
   - Configurable analysis options
   - Resource management
@@ -54,3 +52,4 @@ Contents
    installation
    configuration
    usage
+   output
