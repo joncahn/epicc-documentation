@@ -36,14 +36,18 @@ Intermediate Target Rules
 --------------------------
 
 Snakemake allows intermediate files or rules to be targeted instead of the whole pipeline. If a specific output file is specificied after the snakemake run command, only the steps leading to this file will be performed, not the rest of the pipeline.
+
 For example, to only generate the plot of mapping statistics for the ChIP samples of the analysis name "mysamples" (and all the intermediate files required for it):
+
 ``snakemake --cores 1 results/combined/plots/mapping_stats_mysamples_ChIP.pdf``
 
 In addition to the additional output plots below, two rules can be specified as targets for intermediates outputs:
 
-	- ``map_only``: Only performs the alignement of all samples. It returns bam files, QC files and mapping metrics. Usage: ``snakemake --cores 1 map_only``
+	- ``map_only``: Only performs the alignement of all samples. It returns bam files, QC files and mapping metrics. 
+	Usage: ``snakemake --cores 1 map_only``
 
-	- ``coverage_chip``: Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``). Usage: ``snakemake --cores 1 coverage_chip``
+	- ``coverage_chip``: Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``). 
+	Usage: ``snakemake --cores 1 coverage_chip``
 
 Additional Output Options
 --------------------------
@@ -54,6 +58,7 @@ Below is a list of *cool* outputs that can be generated once whole pipeline ran 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Given a list of genes (and optional labels), it will plot the expression levels in all the different samples in the samplefile and analysis name defined. Genes uniquely differentially regulated in one sample versus one or more samples are color coded. It is based on a Rdata file created during the Differential Expression analysis.
+
 To run it, edit the config file with the target gene list file (``rnaseq_target_file``: 1 column list of genes ID that must match the gtf file of the reference genome used, optional second column for gene labels, additional columns can be present but will not be used) and a corresponding label (``rnaseq_target_file_label``: name which will be included in the name of the output pdf) and run the following command, replacing <analysis_name>, <ref_genome> and <rnaseq_target_file_label> with wanted values:
 
 ::
@@ -61,6 +66,7 @@ To run it, edit the config file with the target gene list file (``rnaseq_target_
   snakemake --cores 1 results/RNA/plots/plot_expression__<analysis_name>__<ref_genome>__<rnaseq_target_file_label>.pdf
 
 Note that the separators between the variables are two underscores next to each other "__", except in "plot_expression".
+
 An example where <analysis_name>="test_smk" and <ref_genome>="TAIR10", while setting the target file and its label "my_genes_of_interests" directly in the snakemake command:
 
 ::
@@ -73,7 +79,9 @@ Output is a single pdf file named ``results/RNA/plots/plot_expression__<analysis
 +++++++++++++++++++++++++++++++++++++++++++++
 
 Given a file containing a list of genes to do GO analysis on, and optionally a background file (default to all genes in the reference genome), it will perform Gene Ontology analysis.
+
 By default, GO is not performed since it requires manual input to build a database. To activate it, ``GO`` needs to be switched to ``true`` in the config file, and the files to make the GO database should be defined in the config file ``gaf_file`` and ``gene_info_file`` below the corresponding reference genome. See `Help_GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ for more details on how to create the GO database.
+
 To run it, edit the config file with the target gene list file (``rnaseq_target_file``: 1 column list of genes ID that must match the gtf file of the reference genome used, optional second column for gene labels, additional columns can be present but will not be used) and a corresponding label (``rnaseq_target_file_label``: name which will be included in the name of the output files) and run the following command, replacing <analysis_name>, <ref_genome> and <rnaseq_target_file_label> with wanted values:
 
 ::
@@ -81,6 +89,7 @@ To run it, edit the config file with the target gene list file (``rnaseq_target_
   snakemake --cores 1 results/RNA/GO/TopGO__<analysis_name>__<ref_genome>__<rnaseq_target_file_label>.done
 
 Note that the separators between the variables are two underscores next to each other "__".
+
 An example where <analysis_name>="test_smk" and <ref_genome>="ColCEN", while setting the target file and its label "my_genes_of_interests" directly in the snakemake command:
 
 ::
@@ -93,7 +102,9 @@ Output are two pdf files, one for the biological process terms ``results/RNA/plo
 +++++++++++++++++++++++++++++++++++++++
 
 Given a bed file containing different regions, it will perform a motifs analysis with meme.
+
 By default motifs analysis is only performed on the final selected TF peak files (``motifs: true`` in the config file). Edit to ``allrep: true`` in the config file for motifs analysis to be performed on all replicates and pairwise idr peaks if available. A plant motifs database is used by default for tomtom. Download the appropriate file from JASPAR and replace its name in the config file ``jaspar_db`` and change the ``motifs_ref_genome`` to match the samples.
+
 To run the analysis:
 
 ::
@@ -101,26 +112,32 @@ To run the analysis:
   snakemake --cores 1 results/TF/chkpts/motifs__<motif_target_file_label>.done
 
 Note that the separator is two underscores next to each other "__".
+
 An example running the pipeline on a slurm hpc, for regions from <ref_genome>="ColCEN", while setting the target file and its label "my_genes_of_interests" directly in the snakemake command:
 
 ::
 
   snakemake --profile profiles/slurm results/TF/chkpts/motifs__my_regions_of_interests.done --config motifs_target_file="data/target_peaks.txt" motifs_target_file_label="my_regions_of_interests" motifs_ref_genome="ColCEN"
 
-Output is the folder ``results/TF/<motif_target_file_label>`` containing a subdirectory called ``meme`` and potentially one called ``tomtom`` with all the results, as described in https://meme-suite.org/meme/index.html.
+Output is the folder ``results/TF/<motif_target_file_label>`` containing a subdirectory called ``meme`` and potentially one called ``tomtom`` with all the results, as described in `MEME suite <https://meme-suite.org/meme/index.html>`__.
+
 When setting ``motif_ref_genome``, it is safer to use a reference genome that has already been used in a run. Otherwise, it will be treated like the *ref_genome* of a sample, creating a fasta file in the ``genomes/<ref_genome>`` directory if a fasta file is found at ``ref_path``.
+
 For the target file chosen ``motif_target_file``, if the regions are over 500bp, only the middle 400bp will be used.
 
 **4. Performing sRNA differential analysis on regions**
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Given a bed or gff file, it will perform the small RNA analysis with shortstack followed by differential analysis with edgeR, using all the samples from the sample file but limiting the mapping and counts to the loci in the target file. Edit ``srna_target_file`` and ``srna_target_file_label`` in the config file. To run the analysis: 
+Given a bed or gff file, it will perform the small RNA analysis with shortstack followed by differential analysis with edgeR, using all the samples from the sample file but limiting the mapping and counts to the loci in the target file. Edit ``srna_target_file`` and ``srna_target_file_label`` in the config file. 
+
+To run the analysis: 
 
 ::
 
   snakemake --cores 1 results/sRNA/clusters/<analysis_name>__<ref_genome>__on_<srna_target_file_label>/Counts.txt
 
 Note that the separators between the variables are two underscores next to each other "__" except between "on" and "<srna_target_file_label>" where it's only one "_".
+
 An example running the pipeline on a slurm hpc, <analysis_name>="test_smk" and <ref_genome>="ColCEN", while setting the target file and its label "miRNAs" directly in the snakemake command:
 
 ::
@@ -136,8 +153,9 @@ The bed or gff file of regions **MUST HAVE** a header with a column called "Name
 **5. Plotting heatmap on regions**
 ++++++++++++++++++++++++++++++++++
 
-Given a bed file, it will plot a heatmap using deeptools.
-Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. To run the analysis: 
+Given a bed file, it will plot a heatmap using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
+
+To run the analysis: 
 
 ::
 
@@ -165,35 +183,48 @@ An example running the pipeline on a slurm hpc, with <analysis_name>="test_smk",
   snakemake --profile profiles/slurm results/combined/plots/Heatmap__regions__most__test_smk__ColCEN__interesting_genes.pdf --config heatmap_target_file="data/target_genes.bed" heatmap_target_file_label="interesting_genes"
 
 Output is a pdf file, or two if sorted heatmap for mC samples was generated.
+
 By default, the heatmaps will be scaled by type (i.e. each ChIP mark, each TF, RNAseq, each sRNAseq size and each mC context on an appropriate scale based on the values in the heatmap). It can be changed to "default", where a single scale is used for the whole heatmap, or to "sample" where each sample is scaled individually. This can be changed in the config file ``heatmaps_scales``.
+
 By default, the heatmaps are sorted based on "mean" of all samples accross all regions. This can be changed in the config file ``heatmaps_sort_options`` to "median" or to "none", keeping the regions in the order of the bedfile.
+
 If the given bedfile is stranded, the heatmap will be done by splitting the regions into plus and minus strand for proper stranded data (RNAseq and sRNAs) values. If this is not the wanted behavior, disable ``stranded_heatmaps`` in the config file.
+
 The color scheme of the heatmap is "seismic" for all samples and "Oranges" for mC. This can be changed manually in the config file ``heatmaps_plot_params``.
+
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
 **6. Plotting metaplot profiles on regions**
 ++++++++++++++++++++++++++++++++++++++++++++
 
-Given a bed file, it will plot a metaplot profile using deeptools.
-Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. To run the analysis: 
+Given a bed file, it will plot a metaplot profile using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
+
+To run the analysis: 
 
 ::
 
   snakemake --cores 1 results/combined/plots/Profile__<matrix_param>__<env>__<analysis_name>__<ref_genome>__<target_name>.pdf
 
 Similar to heatmap above for the <matrix_param> options.
+
 Use <env>="all" to include all samples (mC and others).
+
 Output is two pdf files, where the samples are grouped by regions or not.
+
 By default, the heatmaps will be scaled by type (i.e. each ChIP mark, each TF, RNAseq, each sRNAseq size and each mC context on their appropriate scale based on the values in the heatmap). It can be changed to "default", where a single scale is used for the whole heatmap, or to "sample" where each sample is scaled individually. This can be changed in the config file ``heatmaps_scales``.
+
 By default, the profiles represent the "mean" accross all regions. This can be changed in the config file ``profile_scale`` to "median".
+
 By default, the type of plots are "lines". See deeptools documentation for other options and edit ``profiles_plot_params`` in the config file.
+
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
 **7. Plotting browser screenshots on regions**
 ++++++++++++++++++++++++++++++++++++++++++++++
 
-Given a region file, it will plot a browser screenshot using R packages.
-Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. To run the analysis: 
+Given a region file, it will plot a browser screenshot using R packages. Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. 
+
+To run the analysis: 
 
 ::
 
@@ -207,18 +238,22 @@ The target file is a bed-like file, with the following columns:
 +-----+-------+------+-------+---------+----------------------------+----------------------------+
 
 Each region will be printed individually, and merged into a final PDF.
+
 Hightlights columns are optional, and correspond to regions of the browser that will be highlighted for this specific region (boxed). As many highlights can be used in a comma-separated lists, the first highlight will be in blue and all the others in red. On the above example, the region to plot is chr1:1000-5000, using col6=3000,4000 and col7=50,200 will make a blue box higlighting chr1:3000-3050 and a red one highlighting chr1:4000:4200.
+
 Use <env>="all" to include all samples, "most" for all data-types except mC, or any single environment for data type-specific browsers [all, most, ChIP, TF, RNA, sRNA, mC].
+
 By default, no TE file is used. If you want to add TE annotations, supply a bed-file in the config file ``browser_TE_file``.
 
-### **8. Rerunning a specific analysis**
-++++++++++++++++++++++++++++++++++++++++
+**8. Rerunning a specific analysis**
+++++++++++++++++++++++++++++++++++++
 
 To rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
 e.g ``snakemake --cores 1 results/combined/plots/srna_sizes_stats_test_snakemake_sRNA.pdf --force``
+
 If only the combined analysis is to be performed, and not everything else, delete all the chkpts files in ``results/combined/chkpts/`` as well as in the chkpt of each relevant environment ``results/<env>/chkpts/<env>_analysis__<analysis_name>__<ref_genome>.done``.
-Changing parameters in the config file should trigger a rerun of the impacted samples.
-Several instances of the epicc pipeline can thus be chained to change some parameters in a script, for example:
+
+Changing parameters in the config file should trigger a rerun of the impacted samples. Several instances of the epicc pipeline can thus be chained to change some parameters in a script, for example:
 
 ::
 
