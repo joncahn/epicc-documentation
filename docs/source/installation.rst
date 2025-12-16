@@ -5,9 +5,13 @@ Installation
 
 ``git clone https://github.com/joncahn/epigeneticbutton.git``
 
+to rename it, for example "epicc":
+
+``git clone https://github.com/joncahn/epigeneticbutton.git epicc``
+
 2. Move to the directory
 
-``cd epigeneticbutton``
+``cd epigeneticbutton`` or, if renamed: ``cd epicc``
 
 3. Install snakemake and other required packages from the depency file and activate the environment:
 
