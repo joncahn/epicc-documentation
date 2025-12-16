@@ -260,19 +260,6 @@ More options can be customized by editing the config file directly, and are rela
 For example:
 ``snakemake --cores 1 --config chip_mapping_option="repeatall"`` will override the ChIP-seq mapping option in the config file and instead use the "repeatall" option for ChIP-seq data in the run. Any argument given in line will take precedent over the value in the config file.
 
-3. Intermediate Target Rules
-++++++++++++++++++++++++++++
-
-Snakemake allows intermediate files or rules to be targeted instead of the whole pipeline. If a specific output file is specificied after the snakemake run command, only the steps leading to this file will be performed, not the rest of the pipeline.
-For example, to only generate the plot of mapping statistics for the ChIP samples of the analysis name "mysamples" (and all the intermediate files required for it):
-``snakemake --cores 1 results/combined/plots/mapping_stats_mysamples_ChIP.pdf``
-
-In addition to the additional output plots below, two rules can be specified as targets for intermediates outputs:
-
-	- ``map_only``: Only performs the alignement of all samples. It returns bam files, QC files and mapping metrics. Usage: ``snakemake --cores 1 map_only``
-
-	- ``coverage_chip``: Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``). Usage: ``snakemake --cores 1 coverage_chip``
-
 Resources and Profiles
 -----------------------
 
