@@ -42,6 +42,7 @@ Prepare your sample metadata file (default to ``config/all_samples.tsv``) with t
 
 A template can be found on the `epicc-builder app <https://epicc-builder.streamlit.app/>`__ and you can use it to confirm that your entries follow the epxected patterns.
 A basic example is below (the header is only indicative, and should not be present on the actual file):
+
 +-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
 | *data_type* | *line* | *tissue* | *sample_type* | *replicate* | *seq_id*   | *fastq_path* | *paired* | *ref_genome* |
 +=============+========+==========+===============+=============+============+==============+==========+==============+
