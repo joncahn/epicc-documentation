@@ -204,10 +204,10 @@ Output options
 Default parameters
 ^^^^^^^^^^^^^^^^^^
 
-- Full analysis: 
+- Full analysis:
 	By default, a full analysis is performed form raw data to analysis plots. Change ``full_analysis`` in the config file.
-  
-- Limited QC output: 
+
+- Limited QC output:
 	By default, some QC options are not performed to limit the time and amount of output files. Change ``QC_option`` in the config file.
 
 - No Gene Ontology analysis: 
@@ -233,21 +233,21 @@ Configuration Options
 
 	+ ``full_analysis``: When ``false``, only the mapping and the bigwigs will occur. When ``true``, will also be performed: single-data analyses (e.g. peak calling for ChIP, differential expression for RNAseq, DMRs for mC) and combined analyses (e.g. Upset plots for ChIP/TF, heatmaps and metaplots on all genes).
 
-    + ``te_analysis``: When ``true``, small RNA differential expression will be performed (if such data is available), as well as heatmaps and metaplots of all the samples. The name and path to the TE file in bed format must be filled in the config file for the corresponding reference genome. The name of the TEs (4th column of the bed file) must be unique.
+	+ ``te_analysis``: When ``true``, small RNA differential expression will be performed (if such data is available), as well as heatmaps and metaplots of all the samples. The name and path to the TE file in bed format must be filled in the config file for the corresponding reference genome. The name of the TEs (4th column of the bed file) must be unique.
 
-    + ``QC_option``: When ``true``, runs fastQC on raw and trimmed fastq files.
+	+ ``QC_option``: When ``true``, runs fastQC on raw and trimmed fastq files.
 
 - ChIP Mapping Parameters
 
 	+ ``default``: Standard mapping parameters
-    + ``repeat``: Centromere-specific mapping (more sensitive)
-    + ``repeatall``: Centromere mapping with relaxed MAPQ
-    + ``all``: Relaxed mapping parameters
+	+ ``repeat``: Centromere-specific mapping (more sensitive)
+	+ ``repeatall``: Centromere mapping with relaxed MAPQ
+	+ ``all``: Relaxed mapping parameters
 
 - DMRs parameters
 
 	+ By default, DNA methylation data will be analyzed in all sequence contexts (CG, CHG and CHH, where H = A, T or C). The option for CG-only is under development.
-    + DMRs are called with the R package `DMRcaller <https://www.bioconductor.org/packages/release/bioc/html/DMRcaller.html>`__ (DOI: 10.18129/B9.bioc.DMRcaller) for CG, CHG and CHH and the following (stringent) parameters:
+	+ DMRs are called with the R package `DMRcaller <https://www.bioconductor.org/packages/release/bioc/html/DMRcaller.html>`__ (DOI: 10.18129/B9.bioc.DMRcaller) for CG, CHG and CHH and the following (stringent) parameters:
 
 ::
 
