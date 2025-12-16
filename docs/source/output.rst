@@ -3,7 +3,7 @@ Output
 ======
 
 Output Structure
-----------------
+================
 
 ::
 
@@ -42,5 +42,15 @@ Output Structure
 
 Output Examples
 ===============
+
+Mapping stats 
+-------------
+
+Example for ChIP-seq and RNA-seq (here RNA-seq)
+
+.. image:: images/mapping_stats.png
+
+
+
 
 
