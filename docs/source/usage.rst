@@ -1,8 +1,9 @@
+=====
 Usage
 =====
 
 Running the pipeline
---------------------
+====================
 
 1. To run the pipeline locally:
 
@@ -33,7 +34,7 @@ If you do not want all the snakemake output (very talkative), instead of using `
 *For full understanding of snakemake capabilities and options: https://snakemake.readthedocs.io/en/stable/*
 
 Intermediate Target Rules
---------------------------
+=========================
 
 Snakemake allows intermediate files or rules to be targeted instead of the whole pipeline. If a specific output file is specificied after the snakemake run command, only the steps leading to this file will be performed, not the rest of the pipeline.
 
@@ -50,12 +51,12 @@ In addition to the additional output plots below, two rules can be specified as 
 	Usage: ``snakemake --cores 1 coverage_chip``
 
 Additional Output Options
---------------------------
+=========================
 
 Below is a list of *cool* outputs that can be generated once whole pipeline ran once. You'll find a basic structure for how to tell snakemake to generate them, feel free to replace the --cores 1 with the HPC profile you would rather use.
 
-**1. Plotting RNAseq expression levels on target genes**
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Plotting RNAseq expression levels on target genes
++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Given a list of genes (and optional labels), it will plot the expression levels in all the different samples in the samplefile and analysis name defined. Genes uniquely differentially regulated in one sample versus one or more samples are color coded. It is based on a Rdata file created during the Differential Expression analysis.
 
@@ -75,8 +76,8 @@ An example where <analysis_name>="test_smk" and <ref_genome>="TAIR10", while set
 
 Output is a single pdf file named ``results/RNA/plots/plot_expression__<analysis_name>__<ref_genome>__<rnaseq_target_file_label>.pdf`` where each gene of the list is on an individual page.
 
-**2. Performing GO analysis on target genes**
-+++++++++++++++++++++++++++++++++++++++++++++
+Performing GO analysis on target genes
+++++++++++++++++++++++++++++++++++++++
 
 Given a file containing a list of genes to do GO analysis on, and optionally a background file (default to all genes in the reference genome), it will perform Gene Ontology analysis.
 
@@ -98,8 +99,8 @@ An example where <analysis_name>="test_smk" and <ref_genome>="ColCEN", while set
 
 Output are two pdf files, one for the biological process terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_BP_treemap.pdf`` and one for the molecular function terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_MF_treemap.pdf``. Corresponding tables listing the terms enriched for each gene of the ``rnaseq_target_file`` are also generated at ``results/RNA/GO/topGO_<rnaseq_target_file_label>_<BP|MF>_<GOs|GIDs>.txt`` for a focus on the GO terms or the GIDs, respectively.
 
-**3. Finding motifs on target regions**
-+++++++++++++++++++++++++++++++++++++++
+Finding motifs on target regions
+++++++++++++++++++++++++++++++++
 
 Given a bed file containing different regions, it will perform a motifs analysis with meme.
 
@@ -125,8 +126,8 @@ When setting ``motif_ref_genome``, it is safer to use a reference genome that ha
 
 For the target file chosen ``motif_target_file``, if the regions are over 500bp, only the middle 400bp will be used.
 
-**4. Performing sRNA differential analysis on regions**
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Performing sRNA differential analysis on regions
+++++++++++++++++++++++++++++++++++++++++++++++++
 
 Given a bed or gff file, it will perform the small RNA analysis with shortstack followed by differential analysis with edgeR, using all the samples from the sample file but limiting the mapping and counts to the loci in the target file. Edit ``srna_target_file`` and ``srna_target_file_label`` in the config file. 
 
@@ -150,8 +151,8 @@ If you only want the results of Shortstack and not the differential analysis, li
 
 The bed or gff file of regions **MUST HAVE** a header with a column called "Name" (the 4th column of a bed file or the 9th column of a gff3).
 
-**5. Plotting heatmap on regions**
-++++++++++++++++++++++++++++++++++
+Plotting heatmap on regions
++++++++++++++++++++++++++++
 
 Given a bed file, it will plot a heatmap using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
 
@@ -194,8 +195,8 @@ The color scheme of the heatmap is "seismic" for all samples and "Oranges" for m
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
-**6. Plotting metaplot profiles on regions**
-++++++++++++++++++++++++++++++++++++++++++++
+Plotting metaplot profiles on regions
++++++++++++++++++++++++++++++++++++++
 
 Given a bed file, it will plot a metaplot profile using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
 
@@ -219,8 +220,8 @@ By default, the type of plots are "lines". See deeptools documentation for other
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
-**7. Plotting browser screenshots on regions**
-++++++++++++++++++++++++++++++++++++++++++++++
+Plotting browser screenshots on regions
++++++++++++++++++++++++++++++++++++++++
 
 Given a region file, it will plot a browser screenshot using R packages. Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. 
 
@@ -231,6 +232,7 @@ To run the analysis:
   snakemake --cores 1 results/combined/plots/Browser_<target_name>__<env>__<analysis_name>__<ref_genome>.pdf
 
 The target file is a bed-like file, with the following columns: 
+
 +-----+-------+------+-------+---------+----------------------------+----------------------------+
 | Chr | Start | End  | ID    | Binsize | Higlight_starts (optional) | Higlight_widths (optional) |
 +=====+=======+======+=======+=========+============================+============================+
@@ -245,8 +247,8 @@ Use <env>="all" to include all samples, "most" for all data-types except mC, or 
 
 By default, no TE file is used. If you want to add TE annotations, supply a bed-file in the config file ``browser_TE_file``.
 
-**8. Rerunning a specific analysis**
-++++++++++++++++++++++++++++++++++++
+Rerunning a specific analysis
+++++++++++++++++++++++++++++++
 
 To rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
 e.g ``snakemake --cores 1 results/combined/plots/srna_sizes_stats_test_snakemake_sRNA.pdf --force``
