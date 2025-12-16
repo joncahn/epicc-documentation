@@ -5,13 +5,11 @@ Installation
 
 ``git clone https://github.com/joncahn/epigeneticbutton.git``
 
-or for ssh connection
-
-``git clone git@github.com:joncahn/epigeneticbutton.git``
+2. Move to the directory
 
 ``cd epigeneticbutton``
 
-2. Install snakemake and other required packages from the depency file:
+3. Install snakemake and other required packages from the depency file and activate the environment:
 
 ``conda create -n smk9 -y --file config/smk9.txt``
 
