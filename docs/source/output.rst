@@ -49,22 +49,30 @@ Output tree:
 
 ::
 
-ChIP/
-├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-├── fastq/	# Processed FASTQ files
-├── logs/	# Log files
-├── mapped/	# Mapped reads (bam)
-├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
-├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-├── reports/	# QC reports and summary of mapping statistics and peak statistics
-└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+	ChIP/
+	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+	├── fastq/	# Processed FASTQ files
+	├── logs/	# Log files
+	├── mapped/	# Mapped reads (bam)
+	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
+	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
+	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
 Mapping statistics
 ++++++++++++++++++
 
-data for each sample: ``results/ChIP/summary_ChIP_<paired>_mapping_stats_ChIP__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt``
-summary table: ``/results/combined/reports/summary_mapping_stats_<analysis_name>_ChIP.txt``
-plot: ``/results/combined/plots/mapping_stats_<analysis_name>_ChIP.pdf``
+data for each sample::
+
+	results/ChIP/summary_ChIP_<paired>_mapping_stats_ChIP__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+
+summary table:: 
+
+	/results/combined/reports/summary_mapping_stats_<analysis_name>_ChIP.txt
+
+plot:: 
+
+	/results/combined/plots/mapping_stats_<analysis_name>_ChIP.pdf
 
 example:
 
@@ -73,9 +81,17 @@ example:
 Peak statistics
 +++++++++++++++
 
-data for each sample: ``results/ChIP/summary_ChIP_peak_stats_ChIP__<line>__<tissue>__<sample_type>__<ref_genome>.txt``
-summary table: ``/results/combined/reports/summary_peak_stats_<analysis_name>_ChIP.txt``
-plot: ``/results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf``
+data for each sample:: 
+
+	results/ChIP/summary_ChIP_peak_stats_ChIP__<line>__<tissue>__<sample_type>__<ref_genome>.txt
+
+summary table:: 
+
+	/results/combined/reports/summary_peak_stats_<analysis_name>_ChIP.txt
+
+plot:: 
+
+	/results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
 
 example:
 
@@ -84,14 +100,18 @@ example:
 Fingerprints
 ++++++++++++
 
-plot for each biological replicate: ``results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
+plot for each biological replicate:: 
+
+	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
 (see TF ChIP-seq for example) 
 
 IDR
 +++
 
-plot for pairs of biological replicate: ``results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
+plot for pairs of biological replicate::
+
+	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
 (see TF ChIP-seq for example)
 
@@ -102,39 +122,57 @@ Output tree:
 
 ::
 
-TF/
-├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-├── fastq/	# Processed FASTQ files
-├── logs/	# Log files
-├── mapped/	# Mapped reads (bam)
-├── motifs/	# Motifs analysis with the MEME suite, one folder per selected and idr peaks (and per replicates if so chosen in the config file)
-├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
-├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-├── reports/	# QC reports and summary of mapping statistics and peak statistics
-└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+	TF/
+	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+	├── fastq/	# Processed FASTQ files
+	├── logs/	# Log files
+	├── mapped/	# Mapped reads (bam)
+	├── motifs/	# Motifs analysis with the MEME suite, one folder per selected and idr peaks (and per replicates if so chosen in the config file)
+	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
+	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
+	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
 Mapping statistics
 ++++++++++++++++++
 
-data for each sample: ``results/TF/summary_TF_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt``
-summary table: ``/results/combined/reports/summary_mapping_stats_<analysis_name>_TF.txt``
-plot: ``/results/combined/plots/mapping_stats_<analysis_name>_TF.pdf``
+data for each sample:: 
+
+	results/TF/summary_TF_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+
+summary table:: 
+	
+	/results/combined/reports/summary_mapping_stats_<analysis_name>_TF.txt
+
+plot::
+	
+	/results/combined/plots/mapping_stats_<analysis_name>_TF.pdf
 
 (see histone ChIP-seq for example) 
 
 Peak statistics
 +++++++++++++++
 
-data for each sample: ``results/TF/summary_TF_peak_stats_<dat_type>__<line>__<tissue>__<sample_type>__<ref_genome>.txt``
-summary table: ``/results/combined/reports/summary_peak_stats_<analysis_name>_TF.txt``
-plot: ``/results/combined/plots/peak_stats_<analysis_name>_TF.pdf``
+data for each sample::
+
+	results/TF/summary_TF_peak_stats_<dat_type>__<line>__<tissue>__<sample_type>__<ref_genome>.txt
+
+summary table:: 
+
+	/results/combined/reports/summary_peak_stats_<analysis_name>_TF.txt
+
+plot:: 
+
+	/results/combined/plots/peak_stats_<analysis_name>_TF.pdf
 
 (see histone ChIP-seq for example) 
 
 Fingerprints
 ++++++++++++
 
-plot for each biological replicate: ``results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
+plot for each biological replicate:: 
+
+	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
 example:
 
@@ -143,7 +181,9 @@ example:
 IDR
 +++
 
-plot for pairs of biological replicate: ``results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
+plot for pairs of biological replicate::
+
+	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
 example:
 
@@ -152,9 +192,13 @@ example:
 Motifs
 ++++++
 
-Full output from selected peaks (and idr peaks if available) for each sample: ``results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/``
+Full output from selected peaks (and idr peaks if available) for each sample::
 
-which includes: ``results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/meme_out/meme.html``
+	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/
+
+which includes:: 
+
+	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/meme_out/meme.html
 
 example:
 
