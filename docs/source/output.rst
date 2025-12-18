@@ -332,36 +332,9 @@ Global output from the differential analysis::
 
 Examples:
 
-.. figure:: images/BCV_RNAseq_epicc_ColCEN.png
+.. image:: images/BCV_RNAseq_epicc_ColCEN.png
 
-	BCV plot output for each complete DEG analysis
-
-.. figure::
-
-   .. grid:: 2
-      :gutter: 2
-
-      .. grid-item::
-
-         .. image:: images/MDS1.png
-            :width: 100%
-
-      .. grid-item::
-
-         .. image:: images/MDS2.png
-            :width: 100%
-
-      .. grid-item::
-
-         .. image:: images/MDS3.png
-            :width: 100%
-
-      .. grid-item::
-
-         .. image:: images/MDS4.png
-            :width: 100%
-
-   Four MDS plots output for each complete DEG analysis
+.. image:: images/MDS1.png
 
 Heatmap of all DEGs across all samples::
 	
@@ -370,20 +343,12 @@ Heatmap of all DEGs across all samples::
 
 Examples:
 
-.. grid:: 2
-   :gutter: 2
+.. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
 
-   .. grid-item::
+	CPM heatmap
+.. figure:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
 
-      .. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
-         :width: 100%
-
-   .. grid-item::
-
-      .. figure:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
-         :width: 100%
-
-         Z-score heatmap
+    Z-score heatmap
 
 (the actual output is in pdf format)
 
