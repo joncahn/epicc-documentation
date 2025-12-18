@@ -62,19 +62,19 @@ Output tree:
 Mapping statistics
 ++++++++++++++++++
 
-data for each sample::
+- Data for each sample::
 
 	results/ChIP/reports/summary_ChIP_<paired>_mapping_stats_ChIP__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
 
-summary table:: 
+- Summary table:: 
 
 	results/combined/reports/summary_mapping_stats_<analysis_name>_ChIP.txt
 
-plot:: 
+- Plot:: 
 
 	results/combined/plots/mapping_stats_<analysis_name>_ChIP.pdf
 
-example:
+- Example:
 
 .. image:: images/mapping_stats_epicc_ChIP.png
 
@@ -83,15 +83,15 @@ example:
 Peak statistics
 +++++++++++++++
 
-data for each sample:: 
+- Data for each sample:: 
 
 	results/ChIP/reports/summary_ChIP_peak_stats_ChIP__<line>__<tissue>__<sample_type>__<ref_genome>.txt
 
-summary table:: 
+- Summary table:: 
 
 	results/combined/reports/summary_peak_stats_<analysis_name>_ChIP.txt
 
-plot:: 
+- Plot:: 
 
 	results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
 
@@ -102,7 +102,7 @@ Fingerprints
 
 Performed with Deeptools.
 
-plot for each biological replicate:: 
+- Plot for each biological replicate:: 
 
 	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
@@ -113,7 +113,7 @@ IDR
 
 Performed with IDR.
 
-plot for pairs of biological replicate::
+- Plot for pairs of biological replicate::
 
 	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
@@ -124,15 +124,15 @@ Upset Plot
 
 Perfomed with ComplexUpset.
 
-Table of combined peaks for all histone ChIP-seq samples in the analysis::
+- Table of combined peaks for all histone ChIP-seq samples in the analysis::
 
 	results/combined/bedfiles/combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
 
-Table of combined peaks for all histone ChIP-seq samples in the analysis annotated based on the closest gene::
+- Table of combined peaks for all histone ChIP-seq samples in the analysis annotated based on the closest gene::
 
 	results/combined/bedfiles/annotated__combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
 
-Upset plot::
+- Upset plot::
 
 	results/combined/plots/Upset_combined_peaks__ChIP__<analysis_name>__<ref_genome>.pdf
 
@@ -159,15 +159,15 @@ Output tree:
 Mapping statistics
 ++++++++++++++++++
 
-data for each sample:: 
+- Data for each sample:: 
 
 	results/TF/reports/summary_TF_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
 
-summary table:: 
+- Summary table:: 
 	
 	results/combined/reports/summary_mapping_stats_<analysis_name>_TF.txt
 
-plot::
+- Plot::
 	
 	results/combined/plots/mapping_stats_<analysis_name>_TF.pdf
 
@@ -176,19 +176,19 @@ plot::
 Peak statistics
 +++++++++++++++
 
-data for each sample::
+- Data for each sample::
 
 	results/TF/reports/summary_TF_peak_stats_<dat_type>__<line>__<tissue>__<sample_type>__<ref_genome>.txt
 
-summary table:: 
+- Summary table:: 
 
 	results/combined/reports/summary_peak_stats_<analysis_name>_TF.txt
 
-plot:: 
+- Plot:: 
 
 	results/combined/plots/peak_stats_<analysis_name>_TF.pdf
 
-example:
+- Example:
 
 .. image:: images/peak_stats_epicc_TF.png
 
@@ -199,11 +199,11 @@ Fingerprints
 
 Performed with Deeptools.
 
-plot for each biological replicate:: 
+- Plot for each biological replicate:: 
 
 	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
-example:
+- Example:
 
 .. image:: images/Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN.png
 
@@ -212,11 +212,11 @@ IDR
 
 Performed with IDR.
 
-plot for pairs of biological replicate::
+- Plot for pairs of biological replicate::
 
 	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
-example:
+- Example:
 
 .. image:: images/idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak.png
 
@@ -225,15 +225,15 @@ Motifs
 
 Performed with the MEME suite.
 
-Full output from selected peaks (and idr peaks if available) for each sample::
+- Full output from selected peaks (and idr peaks if available) for each sample::
 
 	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/
 
-which includes:: 
+- which includes:: 
 
 	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/meme_out/meme.html
 
-example:
+- Example:
 
 .. image:: images/meme.png
 
@@ -244,15 +244,15 @@ Upset Plot
 
 Perfomed with ComplexUpset.
 
-Table of combined peaks for all TF ChIP-seq samples in the analysis::
+- Table of combined peaks for all TF ChIP-seq samples in the analysis::
 
 	results/combined/bedfiles/combined_peaks__TF__<analysis_name>__<ref_genome>.bed
 
-Table of combined peaks for all TF ChIP-seq samples in the analysis annotated based on the closest gene::
+- Table of combined peaks for all TF ChIP-seq samples in the analysis annotated based on the closest gene::
 
 	results/combined/bedfiles/annotated__combined_peaks__TF__<analysis_name>__<ref_genome>.bed
 
-Upset plot::
+- Upset plot::
 
 	results/combined/plots/Upset_combined_peaks__TF__<analysis_name>__<ref_genome>.pdf
 
@@ -279,15 +279,15 @@ Output tree:
 Mapping statistics
 ++++++++++++++++++
 
-data for each sample::
+- Data for each sample::
 
 	results/RNA/reports/summary_RNA_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
 
-summary table:: 
+- Summary table:: 
 	
 	results/combined/reports/summary_mapping_stats_<analysis_name>_RNA.txt
 
-plot::
+- Plot::
 	
 	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
 
@@ -298,31 +298,31 @@ Differential Expression analysis
 
 Counts from STAR; analysis performed with EdgeR.
 
-count data for each RNAseq sample::
+- Count data for each RNAseq sample::
 
 	results/RNA/DEG/counts__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.tab
 
-summary tables for all RNAseq samples used for the analysis:: 
+- Summary tables for all RNAseq samples used for the analysis:: 
 	
 	results/RNA/DEG/counts__<analysis_name>__<ref_genome>.txt # Count data output by STAR
 	results/RNA/DEG/samples__<analysis_name>__<ref_genome>.txt # Table of samples information for edgeR analysis
 	results/RNA/DEG/genes_rpkm__<analysis_name>__<ref_genome>.txt # Table of gene expression values for all genes in all samples in Reads per Kilobase Million (RPKM)
 
-output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
+- Output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
 	
 	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # all genes in logFC sample1/sample2 and their differential statistics
 	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
 
-output summary tables of DEGs for all pairwise comparisons:: 
+- Output summary tables of DEGs for all pairwise comparisons:: 
 
 	results/RNA/DEG/summary_DEG_stats__<analysis_name>__<ref_genome>.txt # number of differential expressed genes in all pairwise comparisons and uniquely regulated in each sample
 	results/RNA/DEG/unique_DEGs__<analysis_name>__<ref_genome>.txt # list of genes uniquely regulated in each sample
 
-Rdata object for plotting expression levels::
+- Rdata object for plotting expression levels::
 
 	results/RNA/DEG/ReadyToPlot__<analysis_name>__<ref_genome>.RData
 
-Global output from the differential analysis::
+- Global output from the differential analysis::
 
 	results/combined/plots/BCV_RNAseq_<analysis_name>_<ref_genome>.pdf # Biological Coefficient of Variation of all genes
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d12.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
@@ -330,29 +330,26 @@ Global output from the differential analysis::
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
 
-Examples:
+- Examples:
 
 .. image:: images/BCV_RNAseq_epicc_ColCEN.png
 
-.. image:: images/MDS1.png
+.. image:: images/MDS2.png
 
-Heatmap of all DEGs across all samples::
+- Heatmap of all DEGs across all samples::
 	
 	results/combined/plots/Heatmap_RNAseq_cpm__<analysis_name>__<ref_genome>.pdf # all gene expression normalized by count per million
 	results/combined/plots/Heatmap_RNAseq_zscore__<analysis_name>__<ref_genome>.pdf # each gene normalized by Z-score
 
-Examples:
+- Examples:
 
 .. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
 
-	CPM heatmap
-.. figure:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
-
-    Z-score heatmap
+.. image:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
 
 (the actual output is in pdf format)
 
-Plots of expression level in all samples for the top 100 DEGs (if present)::
+- Plots of expression level in all samples for the top 100 DEGs (if present)::
 	
 	results/combined/plots/plot_expression__<analysis_name>__<ref_genome>__unique_DEGs.pdf
 
@@ -363,7 +360,7 @@ Gene Ontology analysis
 
 Performed with rrvgo and TopGO.
 
-List of Gene Ontology (GO) terms and corresponding Gene IDs (GIDs) enriched in the DEGs uniquely UP- and DOWN-regulated in each sample::
+- List of Gene Ontology (GO) terms and corresponding Gene IDs (GIDs) enriched in the DEGs uniquely UP- and DOWN-regulated in each sample::
 
 	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_BP_GOs.txt # Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
 	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_BP_GIDs.txt # genes in the Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
@@ -374,15 +371,16 @@ List of Gene Ontology (GO) terms and corresponding Gene IDs (GIDs) enriched in t
 	results/RNA/GO/topGO_UP_in_<line>__<tissue>_MF_GOs.txt # Molecular Function (MF) GO terms enriched in genes only UP-regulated in this sample
 	results/RNA/GO/topGO_UP_in_<line>__<tissue>_MF_GIDs.txt # genes in the Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample 
 	
-Corresponding plots::
+- Corresponding plots::
 
 	results/RNA/plots/topGO_DOWN_in_<line>__<tissue>_BP_treemap.pdf # Treemap of simplified BP terms in DOWN-regulated genes in this sample
 	results/RNA/plots/topGO_DOWN_in_<line>__<tissue>_MF_treemap.pdf # Treemap of simplified MF terms in DOWN-regulated genes in this sample
 	results/RNA/plots/topGO_UP_in_<line>__<tissue>_BP_treemap.pdf # Treemap of simplified BP terms in UP-regulated genes in this sample
 	results/RNA/plots/topGO_UP_in_<line>__<tissue>_MF_treemap.pdf # Treemap of simplified MF terms in UP-regulated genes in this sample
+
 If not enough terms are enriched, these plots might not be created.
 
-Example (BP_DOWN):
+- Example (BP_DOWN):
 
 .. image:: images/topGO_DOWN_in_Col0__suvh13_BP_treemap.png
 
@@ -404,19 +402,19 @@ Upset Plot
 
 Perfomed with ComplexUpset.
 
-Table of combined peaks for all TF and histone ChIP-seq samples in the analysis::
+- Table of combined peaks for all TF and histone ChIP-seq samples in the analysis::
 
 	results/combined/bedfiles/combined_peaks__all_chip__<analysis_name>__<ref_genome>.bed
 
-Table of combined peaks for all TF and histone ChIP-seq samples in the analysis annotated based on the closest gene::
+- Table of combined peaks for all TF and histone ChIP-seq samples in the analysis annotated based on the closest gene::
 
 	results/combined/bedfiles/annotated__combined_peaks__all_chip__<analysis_name>__<ref_genome>.bed
 
-Upset plot::
+- Upset plot::
 
 	results/combined/plots/Upset_combined_peaks__all_chip__<analysis_name>__<ref_genome>.pdf
 
-Example:
+- Example:
 
 .. image:: images/Upset_combined_peaks__all_chip__epicc__ColCEN.png
 
