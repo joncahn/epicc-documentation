@@ -369,6 +369,7 @@ Heatmap of all DEGs across all samples::
 	results/combined/plots/Heatmap_RNAseq_zscore__<analysis_name>__<ref_genome>.pdf # each gene normalized by Z-score
 
 Examples:
+
 .. grid:: 2
 	:gutter: 2
 
