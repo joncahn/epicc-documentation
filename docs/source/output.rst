@@ -45,7 +45,8 @@ Data-specific Output
 Histone ChIP-seq
 ----------------
 
-Output tree:
+Output tree
++++++++++++
 
 ::
 
@@ -141,7 +142,8 @@ Perfomed with ComplexUpset.
 TF ChIP-seq
 -----------
 
-Output tree:
+Output tree
++++++++++++
 
 ::
 
@@ -261,7 +263,8 @@ Perfomed with ComplexUpset.
 RNA-seq
 -------
 
-Output tree:
+Output tree
++++++++++++
 
 ::
 
@@ -341,11 +344,9 @@ Counts from STAR; analysis performed with EdgeR.
 	results/combined/plots/Heatmap_RNAseq_cpm__<analysis_name>__<ref_genome>.pdf # all gene expression normalized by count per million
 	results/combined/plots/Heatmap_RNAseq_zscore__<analysis_name>__<ref_genome>.pdf # each gene normalized by Z-score
 
-- Examples:
+- Example:
 
 .. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
-
-.. image:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
 
 (the actual output is in pdf format)
 
