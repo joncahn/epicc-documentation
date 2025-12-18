@@ -251,11 +251,12 @@ Configuration Options
 
 ::
 
-		-CG: method="noise-filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.3, minGap=200, minSize=50, minReadsPerCytosine=3	
-		-CHG: method="noise_filter", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.2, minGap=200, minSize=50, minReadsPerCytosine=3
-		-CHH: method="bins", binSize=100, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.1, minGap=200, minSize=50, minReadsPerCytosine=3
-
-	+ Modify the script ``workflow/scripts/R_call_DMRs.R`` if other paramteres/contexts should be performed, or make a copy such as ``workflow/scripts/R_call_DMRs_custom.R`` and replace it in the rule ``call_DMRs_pairwise`` in the ``workflow/rules/mC.smk`` file.
+		-CG: method="noise-filter", binSize=200, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.3, minGap=200, minSize=50, minReadsPerCytosine=3	
+		-CHG: method="noise_filter", binSize=200, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.2, minGap=200, minSize=50, minReadsPerCytosine=3
+		-CHH: method="bins", binSize=200, test="score", pValueThreshold=0.01, minCytosinesCount=5, minProportionDifference=0.1, minGap=200, minSize=50, minReadsPerCytosine=3
+	
+	+ These parameters were selected based on the most optimal results obtained by the authors `[Catoni et al. 2018] <https://academic.oup.com/nar/article/46/19/e114/5050634>`__.
+	+ Modify the script `scripts/R_call_DMRs.R` if other paramteres should be performed, or make a copy such as ``scripts/R_call_DMRs_custom.R`` and replace it in the rule ``call_DMRs_pairwise`` in the ``workflow/rules/mC.smk`` file.
 
 - In-line customization of the parameters
 
