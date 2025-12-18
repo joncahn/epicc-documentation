@@ -11,16 +11,20 @@ Summary
 -------
 
 Prepare your sample metadata file (default to ``config/all_samples.tsv``) with the required 9 columns below (see below for more details specific to each data-type):
-   
+
++-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
+| *data_type* | *line* | *tissue* | *sample_type* | *replicate* | *seq_id*   | *fastq_path* | *paired* | *ref_genome* |
++=============+========+==========+===============+=============+============+==============+==========+==============+
+
   - Col1: *data_type*
       Type of data. Only takes one of these options: [RNAseq | ChIP | TF | mC | sRNA]
 	  See below for how to further specify ChIP and TF samples.
 
   - Col2: *line*
-      Sample line (e.g. ``B73``). It can also be used to define different genotypes (e.g. ``WT``, ```ddm1```, ```dnmt3a```), or other characteristics that vary between samples, such as collection time points.
+      Sample line (e.g. ``B73``). It can also be used to define different genotypes (e.g. ``WT``, ``ddm1``, ``dnmt3a``), or other characteristics that vary between samples, such as collection time points.
   
   - Col3: *tissue* 
-      Tissue type (e.g. ``Leaf``). It can also be used to define different genotypes (e.g.``WT``, ```ddm1```, ```dnmt3a```), or other characteristics that vary between samples, such as collection time points.
+      Tissue type (e.g. ``Leaf``). It can also be used to define different genotypes (e.g.``WT``, ``ddm1``, ``dnmt3a``), or other characteristics that vary between samples, such as collection time points.
   
   - Col4: *sample_type* 
       Sample identifier. It depends on the type of data; for example for ChIP-seq data, it is used to differentiate the IP from the corresponding Input. See `Columns unique per data type` below for the different options.
@@ -41,15 +45,57 @@ Prepare your sample metadata file (default to ``config/all_samples.tsv``) with t
       Reference genome name. Will need an entry in the configuration file.
 
 A template can be found on the `epicc-builder app <https://epicc-builder.streamlit.app/>`__ and you can use it to confirm that your entries follow the epxected patterns.
-A basic example is below (the header is only indicative, and should not be present on the actual file):
 
-+-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
-| *data_type* | *line* | *tissue* | *sample_type* | *replicate* | *seq_id*   | *fastq_path* | *paired* | *ref_genome* |
-+=============+========+==========+===============+=============+============+==============+==========+==============+
-|ChIP         | Col0   | WT       | IP            | Rep1        | wt_h3_ctrl | ./fastq/     | PE       | ColCEN       |
-+-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
-|ChIP         | Col0   | WT       | H3K27ac       | Rep1        | wt_h3k27   | ./fastq/     | PE       | ColCEN       |
-+-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
+Example
+-------
+
+A test example is below (the header is only indicative, and should not be present on the actual file), using data from `Cahn et al. 2024 <https://pubmed.ncbi.nlm.nih.gov/39632087/>`__ and `Lee et al. 2020 <https://pubmed.ncbi.nlm.nih.gov/32303559/>`__.
+
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+| *data_type* | *line* | *tissue*     | *sample_type* | *replicate* | *seq_id*    | *fastq_path* | *paired* | *ref_genome* |
++=============+========+==============+===============+=============+=============+==============+==========+==============+
+ChIP          | Col0   | WT           | H3K27ac       | Rep1        | SRR27821885 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+ChIP          | Col0   | WT           | H3K4me1       | Rep1        | SRR27821852 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+ChIP          | Col0   | WT           | Input         | Rep1        | SRR27821932 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+mC            | Col0   | suvh1        | WGBS          | Rep1        | SRR27821959 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+mC            | Col0   | WT           | WGBS          | Rep1        | SRR27821907 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+mC            | Col0   | WT           | WGBS          | Rep2        | SRR27821907 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | suvh13       | RNAseq        | Rep1        | SRR27821840 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | suvh13       | RNAseq        | Rep2        | SRR27821839 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | suvh13       | RNAseq        | Rep3        | SRR27821838 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | WT           | RNAseq        | Rep1        | SRR27821967 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | WT           | RNAseq        | Rep2        | SRR27821966 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+RNAseq        | Col0   | WT           | RNAseq        | Rep3        | SRR27821918 | SRA          | PE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH1      | Col0   | suvh1.1      | Input         | Rep1        | SRR27821931 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH1      | Col0   | suvh1.1      | Input         | Rep2        | SRR27821934 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH1      | Col0   | suvh1.1      | IP            | Rep1        | SRR27821933 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH1      | Col0   | suvh1.1      | IP            | Rep2        | SRR27821935 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH3      | Col0   | suvh3        | Input         | RepA        | SRR27821929 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+TF_SUVH3      | Col0   | suvh3        | IP            | RepA        | SRR27821930 | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+sRNA          | Col0   | VLP_ddm1     | shRNA         | Rep1        | SRR8792540  | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+sRNA          | Col0   | VLP_ddm1     | shRNA         | Rep2        | SRR8792538  | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
+sRNA          | Col0   | VLP_WT_inflo | shRNA         | Rep1        | SRR8792539  | SRA          | SE       | ColCEN       |
++-------------+--------+--------------+---------------+-------------+-------------+--------------+----------+--------------+
 
 Columns common to all types of samples
 --------------------------------------
