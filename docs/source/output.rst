@@ -76,7 +76,9 @@ plot::
 
 example:
 
-.. image:: images/mapping_stats_epicc_ChIP.pdf
+.. image:: images/mapping_stats_epicc_ChIP.png
+
+(the actual output is in pdf format)
 
 Peak statistics
 +++++++++++++++
@@ -93,9 +95,7 @@ plot::
 
 	/results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
 
-example:
-
-.. image:: images/peak_stats_epicc_ChIP.pdf
+(see TF ChIP-seq for example)
 
 Fingerprints
 ++++++++++++
@@ -165,7 +165,11 @@ plot::
 
 	/results/combined/plots/peak_stats_<analysis_name>_TF.pdf
 
-(see histone ChIP-seq for example) 
+example:
+
+.. image:: images/peak_stats_epicc_TF.png
+
+(the actual output is in pdf format)
 
 Fingerprints
 ++++++++++++
@@ -202,7 +206,7 @@ which includes::
 
 example:
 
-.. image:: images/meme.html
+.. image:: images/meme.png
 
 RNA-seq
 -------
