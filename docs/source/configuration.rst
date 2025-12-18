@@ -15,6 +15,8 @@ Prepare your sample metadata file (default to ``config/all_samples.tsv``) with t
 +-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
 | *data_type* | *line* | *tissue* | *sample_type* | *replicate* | *seq_id*   | *fastq_path* | *paired* | *ref_genome* |
 +=============+========+==========+===============+=============+============+==============+==========+==============+
++-------------+--------+----------+---------------+-------------+------------+--------------+----------+--------------+
+
 
   - Col1: *data_type*
       Type of data. Only takes one of these options: [RNAseq | ChIP | TF | mC | sRNA]
