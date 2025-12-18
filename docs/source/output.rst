@@ -371,19 +371,19 @@ Heatmap of all DEGs across all samples::
 Examples:
 
 .. grid:: 2
-  :gutter: 2
+   :gutter: 2
 
-  .. grid-item::
+   .. grid-item::
 
-    .. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
-       :width: 100%
+      .. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
+         :width: 100%
 
-  .. grid-item::
+   .. grid-item::
 
-    .. figure:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
-       :width: 100%
+      .. figure:: images/Heatmap_RNAseq_zscore__epicc__ColCEN.png
+         :width: 100%
 
-       Z-score heatmap
+         Z-score heatmap
 
 (the actual output is in pdf format)
 
