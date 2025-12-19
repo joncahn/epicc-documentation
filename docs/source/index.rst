@@ -3,6 +3,8 @@ Welcome to EPICC documentation!
 Epigenetic Pipeline for Integrative Chromatin Characterization (EPICC) aka Epigenetic Button
 --------------------------------------------------------------------------------------------
 
+.. image:: images/epicc.png
+
 A Snakemake-based pipeline for analyzing and integrating various types of (epi)genomics datasets, including histone and transcription factor ChIP-seq, RNA-seq, RAMPAGE, small RNA-seq, and methylC-seq.
 
 Overview
