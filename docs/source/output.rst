@@ -314,7 +314,7 @@ Counts from STAR; analysis performed with EdgeR.
 - Output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
 	
 	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # all genes in logFC sample1/sample2 and their differential statistics
-	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
+	results/RNA/DEG/DEG_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
 
 - Output summary tables of DEGs for all pairwise comparisons:: 
 
@@ -354,7 +354,9 @@ Counts from STAR; analysis performed with EdgeR.
 	
 	results/combined/plots/plot_expression__<analysis_name>__<ref_genome>__unique_DEGs.pdf
 
-(See Additional Output for an example)
+- Example:
+
+.. image:: images/RNAseq_expression.png
 
 Gene Ontology analysis
 ++++++++++++++++++++++
@@ -402,85 +404,81 @@ Output tree
 	├── logs/	# Log files
 	├── mapped/	# Subfolders of ShortStack output for each replicate
 	├── reports/	# QC reports and summary of mapping statistics and peak statistics
-	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample for each size chosen (default, 21, 22, 23 and 24nt)
 
 Mapping statistics
 ++++++++++++++++++
 
 - Data for each sample::
 
-	results/RNA/reports/summary_RNA_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+	results/sRNA/reports/sizes_stats__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
 
 - Summary table:: 
 	
-	results/combined/reports/summary_mapping_stats_<analysis_name>_RNA.txt
+	results/combined/reports/summary_sizes_stats_<analysis_name>_sRNA.txt
 
 - Plot::
 	
-	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
+	results/combined/plots/srna_sizes_stats_<analysis_name>_sRNA.pdf # all sizes found in the raw data
+	results/combined/plots/srna_sizes_stats_zoom_<analysis_name>_sRNA.pdf # zoom to chosen sizes (default 21 to 24nt)
 
-(see histone ChIP-seq for an example) 
+- Example::
 
-Differential Expression analysis
-++++++++++++++++++++++++++++++++
+.. image:: images/srna_sizes_stats_epicc_sRNA.png
 
-Counts from STAR; analysis performed with EdgeR.
+Cluster and Differential Expression analysis
+++++++++++++++++++++++++++++++++++++++++++++
 
-- Count data for each RNAseq sample::
+Counts from ShortStack; analysis performed with EdgeR.
 
-	results/RNA/DEG/counts__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.tab
+- ShortStack analysis on each replicate::
 
-- Summary tables for all RNAseq samples used for the analysis:: 
+	results/mapped/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>/ # output folder from ShortStack with all cluster results and alignement files
+	results/mapped/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>/clusters.bed # simplified bed-file of clusters for downstream analyses
+
+- For all samples in the analysis, two runs will be performed by default (three with the optional TE analysis), which will create the same output
+- The full ShortStack output will be located in these folders::
 	
-	results/RNA/DEG/counts__<analysis_name>__<ref_genome>.txt # Count data output by STAR
-	results/RNA/DEG/samples__<analysis_name>__<ref_genome>.txt # Table of samples information for edgeR analysis
-	results/RNA/DEG/genes_rpkm__<analysis_name>__<ref_genome>.txt # Table of gene expression values for all genes in all samples in Reads per Kilobase Million (RPKM)
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/ # Identifying small RNA clusters, normalizing accross all samples
+	results/clusters/<analysis_name>__<ref_genome>__on_all_genes/ # Limiting mapping to all genes, normalizing accross all samples
+	results/clusters/<analysis_name>__<ref_genome>__on_all_TEs/ # Limiting mapping to all TEs, normalizing accross all samples (optional)
 
-- Output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
+- Each folder (e.g. on new clusters) will also contain the files required for edgeR analysis and output from the differential analysis, following the same pattern than for DEG analysis of RNAseq::
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/counts_for_edgeR.txt # Count data for edgeR analysis
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/samples_for_edgeR.txt # Table of samples information for edgeR analysis
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/FC_<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # log Fold Change between each pairs of samples at all clusters
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/DEG_<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only differentially regulated clusters between each pair of samples
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/unique_DEGs.txt # list of clusters uniquely regulated in each sample
+
+- For each differential analysis (e.g. on new clusters), similar output than for RNAseq DEGs will be generated, following the naming pattern ``sRNA_<analysis_name>_<ref_genome>__on_new_clusters`` pattern. It includes::
 	
-	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # all genes in logFC sample1/sample2 and their differential statistics
-	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
-
-- Output summary tables of DEGs for all pairwise comparisons:: 
-
-	results/RNA/DEG/summary_DEG_stats__<analysis_name>__<ref_genome>.txt # number of differential expressed genes in all pairwise comparisons and uniquely regulated in each sample
-	results/RNA/DEG/unique_DEGs__<analysis_name>__<ref_genome>.txt # list of genes uniquely regulated in each sample
-
-- Rdata object for plotting expression levels::
-
-	results/RNA/DEG/ReadyToPlot__<analysis_name>__<ref_genome>.RData
-
-- Global output from the differential analysis::
-
+	results/sRNA/reports/summary_DEG_stats__<analysis_name>__<refgenome>__on_new_clusters.txt # number of differential regulated clusters in all pairwise comparisons and uniquely regulated in each sample
 	results/combined/plots/BCV_RNAseq_<analysis_name>_<ref_genome>.pdf # Biological Coefficient of Variation of all genes
-	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d12.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
-	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d12_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
-	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
-	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
+	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_<d12|d12_labs|d23|d23_labs>.pdf # Multidimensional scaling, all four versions
+	results/combined/plots/Heatmap_sRNA_<cpm|zscore>__<analysis_name>__<ref_genome>__on_new_clusters.pdf # expression values accross all differentially regulated clusters by count per million and zscore.
 
-- Examples:
+(See RNAseq for examples)
 
-.. image:: images/BCV_RNAseq_epicc_ColCEN.png
+Upset Plot
+++++++++++
 
-.. image:: images/MDS2.png
+Perfomed with ComplexUpset.
 
-- Heatmap of all DEGs across all samples::
-	
-	results/combined/plots/Heatmap_RNAseq_cpm__<analysis_name>__<ref_genome>.pdf # all gene expression normalized by count per million
-	results/combined/plots/Heatmap_RNAseq_zscore__<analysis_name>__<ref_genome>.pdf # each gene normalized by Z-score
+- Table of combined clusters identified in at least one of the small RNA replicates in the analysis, split by chosen sizes::
+
+	results/combined/bedfiles/combined_clusters__sRNA__<analysis_name>__<ref_genome>.bed
+
+- Table of combined clusters annotated based on the closest gene::
+
+	results/combined/bedfiles/annotated__combined_clusters__sRNA__<analysis_name>__<ref_genome>.bed
+
+- Upset plot::
+
+	results/combined/plots/Upset_combined_clusters__sRNA__<analysis_name>__<ref_genome>.pdf
 
 - Example:
 
-.. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
-
-(the actual output is in pdf format)
-
-- Plots of expression level in all samples for the top 100 DEGs (if present)::
-	
-	results/combined/plots/plot_expression__<analysis_name>__<ref_genome>__unique_DEGs.pdf
-
-(See Additional Output for an example)
-
+.. image:: images/Upset_combined_clusters__sRNA__epicc__ColCEN.png
 
 DNA methylation
 ---------------
