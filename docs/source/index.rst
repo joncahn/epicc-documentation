@@ -53,3 +53,4 @@ Contents
    configuration
    usage
    output
+   credits
