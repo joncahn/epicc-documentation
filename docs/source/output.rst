@@ -274,10 +274,10 @@ Output tree
 	├── fastq/	# Processed FASTQ files
 	├── GO/	# Gene Ontology Analysis results (optional). Contains GO terms enriched in sets of DEGs uniquely UP- or DOWN-regulated in each sample, and in additional GO analysis (see `usage - GO analysis`)
 	├── logs/	# Log files
-	├── mapped/	# Mapped reads (bam)
-	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
+	├── mapped/	# Mapped reads (bam) (and STAR output files)
+	├── plots/	# Expression and GO analysis (optional)
 	├── reports/	# QC reports and summary of mapping statistics and peak statistics
-	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample
 
 Mapping statistics
 ++++++++++++++++++
@@ -390,6 +390,96 @@ If not enough terms are enriched, these plots might not be created.
 small RNA-seq
 -------------
 
+Output tree
++++++++++++
+
+::
+
+	sRNA/
+	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+	├── clusters/ # Clusters and differential analysis when all samples are analyzed together, on de novo identified clusters, on all genes and on all TEs (optional)
+	├── fastq/	# Processed FASTQ files
+	├── logs/	# Log files
+	├── mapped/	# Subfolders of ShortStack output for each replicate
+	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+
+Mapping statistics
+++++++++++++++++++
+
+- Data for each sample::
+
+	results/RNA/reports/summary_RNA_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+
+- Summary table:: 
+	
+	results/combined/reports/summary_mapping_stats_<analysis_name>_RNA.txt
+
+- Plot::
+	
+	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
+
+(see histone ChIP-seq for an example) 
+
+Differential Expression analysis
+++++++++++++++++++++++++++++++++
+
+Counts from STAR; analysis performed with EdgeR.
+
+- Count data for each RNAseq sample::
+
+	results/RNA/DEG/counts__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.tab
+
+- Summary tables for all RNAseq samples used for the analysis:: 
+	
+	results/RNA/DEG/counts__<analysis_name>__<ref_genome>.txt # Count data output by STAR
+	results/RNA/DEG/samples__<analysis_name>__<ref_genome>.txt # Table of samples information for edgeR analysis
+	results/RNA/DEG/genes_rpkm__<analysis_name>__<ref_genome>.txt # Table of gene expression values for all genes in all samples in Reads per Kilobase Million (RPKM)
+
+- Output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
+	
+	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # all genes in logFC sample1/sample2 and their differential statistics
+	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
+
+- Output summary tables of DEGs for all pairwise comparisons:: 
+
+	results/RNA/DEG/summary_DEG_stats__<analysis_name>__<ref_genome>.txt # number of differential expressed genes in all pairwise comparisons and uniquely regulated in each sample
+	results/RNA/DEG/unique_DEGs__<analysis_name>__<ref_genome>.txt # list of genes uniquely regulated in each sample
+
+- Rdata object for plotting expression levels::
+
+	results/RNA/DEG/ReadyToPlot__<analysis_name>__<ref_genome>.RData
+
+- Global output from the differential analysis::
+
+	results/combined/plots/BCV_RNAseq_<analysis_name>_<ref_genome>.pdf # Biological Coefficient of Variation of all genes
+	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d12.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
+	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d12_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
+	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
+	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
+
+- Examples:
+
+.. image:: images/BCV_RNAseq_epicc_ColCEN.png
+
+.. image:: images/MDS2.png
+
+- Heatmap of all DEGs across all samples::
+	
+	results/combined/plots/Heatmap_RNAseq_cpm__<analysis_name>__<ref_genome>.pdf # all gene expression normalized by count per million
+	results/combined/plots/Heatmap_RNAseq_zscore__<analysis_name>__<ref_genome>.pdf # each gene normalized by Z-score
+
+- Example:
+
+.. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
+
+(the actual output is in pdf format)
+
+- Plots of expression level in all samples for the top 100 DEGs (if present)::
+	
+	results/combined/plots/plot_expression__<analysis_name>__<ref_genome>__unique_DEGs.pdf
+
+(See Additional Output for an example)
 
 
 DNA methylation
