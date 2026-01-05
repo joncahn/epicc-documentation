@@ -444,6 +444,7 @@ Counts from ShortStack; analysis performed with EdgeR.
 	results/clusters/<analysis_name>__<ref_genome>__on_all_TEs/ # Limiting mapping to all TEs, normalizing accross all samples (optional)
 
 - Each folder (e.g. on new clusters) will also contain the files required for edgeR analysis and output from the differential analysis, following the same pattern than for DEG analysis of RNAseq::
+
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/counts_for_edgeR.txt # Count data for edgeR analysis
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/samples_for_edgeR.txt # Table of samples information for edgeR analysis
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/FC_<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # log Fold Change between each pairs of samples at all clusters
