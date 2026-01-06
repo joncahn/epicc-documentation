@@ -285,6 +285,12 @@ Configuration Options
 
 	+ ``QC_option``: When ``true``, runs fastQC on raw and trimmed fastq files.
 
+- Intermediate input formats
+
+	+ ``trimmed_fastqs``: When ``false`` (default), the analysis runs from raw, untrimmed fastq files and performs adapter trimming. If you already have trimmed fastqs, you can switch this config entry to `true` and no additional trimming will be performed (still compatible with nextflex_v3 deduplication and structural RNAs filtering for small RNAs). This can also be used to bypass any trimming step.
+	+ ``aligned_bams``: When ``true`` you can directly provide alignment files for ChIP-seq data (either histone modifications or TF). A single SAM or BAM file must be present in the ``fastq_path`` folder matching the ``seq_id`` value in the metadat samplefile (same logic than when providing raw fastq file locally). No mapping stats plot will be available when providing bam files this way. Default is ``false``.
+	+ Note: These settings are applied to *all* samples in the analysis. If you have some samples to analyze from scratch and other already in an intermediate file, run the pipeline once with the new data - potentially switching ``full_analysis`` to ``false`` for less output - and run it again after switching the available format to ``true``.
+
 - ChIP Mapping Parameters
 
 	+ ``default``: Standard mapping parameters
