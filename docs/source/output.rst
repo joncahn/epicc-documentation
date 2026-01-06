@@ -508,3 +508,27 @@ Perfomed with ComplexUpset.
 
 .. image:: images/Upset_combined_peaks__all_chip__epicc__ColCEN.png
 
+Heatmaps and metaplots
+++++++++++++++++++++++
+
+Performed with Deeptools.
+
+- Heatmaps and metaplots will be performed on all genes in the reference genome, and on all TEs in the TE file provided if optional TE analysis is selected.
+- Three sets of heatmaps and metaplots will be generated with a corresponding prefix, aligning all regions on their Transcription Start Sites (*tss*), Transcription End sites (*tes*) and scaling all regions to the same lenght (*regions*) (used for examples below).
+- DNA methylation samples are treated separately for these outputs due to different interpolation method requirement for vizualization ('nearest' instead of 'bilinear' for the other data types).
+
+- Deeptool matrices and sorted region files::
+
+	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for all samples except mC on all genes; also present "tss" and "tes" instead of "regions".
+	results/combined/matrix/final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes; also present "tss" and "tes" instead of "regions".
+	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions".
+	results/combined/matrix/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions of all genes in sorted order of all samples except mC; also present "tss" and "tes" instead of "regions".
+
+- Heatmaps::
+
+	results/combined/plots/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of all samples except mC, sorted by mean (default, can be changed in configuration); also present "tss" and "tes" instead of "regions".
+	results/combined/plots/Heatmap_sorted__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions".	
+	results/combined/plots/Heatmap__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`); also present "tss" and "tes" instead of "regions".
+	
+
+
