@@ -57,7 +57,7 @@ Output tree
 	├── mapped/	# Mapped reads (bam)
 	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
 	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
 Mapping statistics
@@ -155,7 +155,7 @@ Output tree
 	├── motifs/	# Motifs analysis with the MEME suite, one folder per selected and idr peaks (and per replicates if so chosen in the config file)
 	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
 	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
 Mapping statistics
@@ -270,13 +270,13 @@ Output tree
 
 	RNA/
 	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-	├── DEG/ # Differential Expression Analysis results. Contains count tables, list of differential expression genes for all pairwise comparisons, gene expression tables and RData object for plotting gene expression (see `usage - plotting differential expression`).
+	├── DEG/ # Differential Expression Analysis results. Contains count tables, list of differential expression genes for all pairwise comparisons, gene expression tables and RData object for plotting gene expression (see `usage - plotting differential expression`)
 	├── fastq/	# Processed FASTQ files
 	├── GO/	# Gene Ontology Analysis results (optional). Contains GO terms enriched in sets of DEGs uniquely UP- or DOWN-regulated in each sample, and in additional GO analysis (see `usage - GO analysis`)
 	├── logs/	# Log files
 	├── mapped/	# Mapped reads (bam) (and STAR output files)
 	├── plots/	# Expression and GO analysis (optional)
-	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from STAR and samtools)
 	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample
 
 Mapping statistics
@@ -403,7 +403,7 @@ Output tree
 	├── fastq/	# Processed FASTQ files
 	├── logs/	# Log files
 	├── mapped/	# Subfolders of ShortStack output for each replicate
-	├── reports/	# QC reports and summary of mapping statistics and peak statistics
+	├── reports/	# QC reports (output from Cutadapt) and summary of size statistics
 	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample for each size chosen (default, 21, 22, 23 and 24nt)
 
 Mapping statistics
@@ -456,7 +456,7 @@ Counts from ShortStack; analysis performed with EdgeR.
 	results/sRNA/reports/summary_DEG_stats__<analysis_name>__<refgenome>__on_new_clusters.txt # number of differential regulated clusters in all pairwise comparisons and uniquely regulated in each sample
 	results/combined/plots/BCV_RNAseq_<analysis_name>_<ref_genome>.pdf # Biological Coefficient of Variation of all genes
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_<d12|d12_labs|d23|d23_labs>.pdf # Multidimensional scaling, all four versions
-	results/combined/plots/Heatmap_sRNA_<cpm|zscore>__<analysis_name>__<ref_genome>__on_new_clusters.pdf # expression values accross all differentially regulated clusters by count per million and zscore.
+	results/combined/plots/Heatmap_sRNA_<cpm|zscore>__<analysis_name>__<ref_genome>__on_new_clusters.pdf # expression values accross all differentially regulated clusters by count per million and zscore
 
 (See RNAseq for examples)
 
@@ -483,6 +483,64 @@ Perfomed with ComplexUpset.
 
 DNA methylation
 ---------------
+
+Output tree
++++++++++++
+
+::
+
+	mC/
+	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+	├── DMRs/ # Differential Methylated Regions results. Contains list of DMRs for each context in pairwise comparisons and summary tables
+	├── fastq/	# Processed FASTQ files
+	├── logs/	# Log files
+	├── mapped/	# Mapped reads (bam)
+	├── methylcall/	# CX report (Bismark output) of methylation calls per cytosines
+	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and methylation statistics (output from Bismark)
+	└── tracks/	# Track files (bigwigs); strand-specific and merged methylation values (from 0 to 100%) for each replicate and all replicates of each sample merged
+
+Mapping statistics
+++++++++++++++++++
+
+- Data for each sample::
+
+	results/mC/reports/summary_mC_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+
+- Summary table:: 
+	
+	results/combined/reports/summary_mapping_stats_<analysis_name>_mC.txt
+
+- Plot::
+	
+	results/combined/plots/mapping_stats_<analysis_name>_mC.pdf
+
+(see histone ChIP-seq for an example)
+
+Methylation Calls
++++++++++++++++++
+
+Performed with Bismark
+
+- Methylation data for each sample::
+
+	results/mC/reports/final_report_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.html # html summary output from Bismark
+	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.cytosine_context_summary.txt # methylation level per sequence context output from Bismark
+	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.M-bias.txt # M-bias data output from Bismark
+	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated_splitting_report.txt # Methylation extraction statistics output from Bismark
+	results/mC/methylcall/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.CX_report.txt.gz # Table with methylation values and coverage for each cytosine of the genome
+
+Differential Methylated Regions analysis
+++++++++++++++++++++++++++++++++++++++++
+
+Performed with DMRcaller
+
+- List of differentially methylated regions (DMRs) in each sequence context and summary tables for each pairwise comparison of samples::
+
+	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CG_DMRs.txt # Bed file of DMRs in the CG context between sample1 and sample2 including methylation values and statistics (if there are any CG DMRs)
+	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CHG_DMRs.txt # Bed file of DMRs in the CHG context between sample1 and sample2 including methylation values and statistics (if mC context is all and there are any CHG DMRs)
+	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CHH_DMRs.txt # Bed file of DMRs in the CHH context between sample1 and sample2 including methylation values and statistics (if mC context is all and there are any CHH DMRs)
+
+	results/mC/DMRs/summary__<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__DMRs.txt # summary table with the number of Hyper- and Hypo-methylated regions in each sequence context between sample1 and sample2
 
 Combined Output
 ===============
@@ -519,16 +577,16 @@ Performed with Deeptools.
 
 - Deeptool matrices and sorted region files::
 
-	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for all samples except mC on all genes; also present "tss" and "tes" instead of "regions".
-	results/combined/matrix/final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes; also present "tss" and "tes" instead of "regions".
-	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions".
-	results/combined/matrix/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions of all genes in sorted order of all samples except mC; also present "tss" and "tes" instead of "regions".
+	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for all samples except mC on all genes; also present "tss" and "tes" instead of "regions"
+	results/combined/matrix/final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes; also present "tss" and "tes" instead of "regions"
+	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions"
+	results/combined/matrix/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions of all genes in sorted order of all samples except mC; also present "tss" and "tes" instead of "regions"
 
 - Heatmaps::
 
-	results/combined/plots/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of all samples except mC, sorted by mean (default, can be changed in configuration); also present "tss" and "tes" instead of "regions".
-	results/combined/plots/Heatmap_sorted__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions".	
-	results/combined/plots/Heatmap__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`); also present "tss" and "tes" instead of "regions".
+	results/combined/plots/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of all samples except mC, sorted by mean (default, can be changed in configuration); also present "tss" and "tes" instead of "regions"
+	results/combined/plots/Heatmap_sorted__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions"
+	results/combined/plots/Heatmap__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`); also present "tss" and "tes" instead of "regions"
 	
 
 
