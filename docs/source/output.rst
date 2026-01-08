@@ -204,9 +204,9 @@ Peak metrics
 
 	results/combined/plots/peak_stats_<analysis_name>_TF.pdf
 
-- Example:
-
 .. _fig-peak-stats:
+
+- Example:
 
 .. figure:: images/peak_stats_epicc_TF.png
    :alt: peak_stats_epicc_TF
@@ -226,9 +226,9 @@ Performed with Deeptools.
 
 	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
-- Example:
-
 .. _fig-fingerprint:
+
+- Example:
 
 .. figure:: images/Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN.png
    :alt: Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN
@@ -246,9 +246,9 @@ Performed with IDR.
 
 	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
-- Example:
-
 .. _fig-idr:
+
+- Example:
 
 .. figure:: images/idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak.png
    :alt: idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak
@@ -377,9 +377,9 @@ Counts from STAR; analysis performed with EdgeR.
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23.pdf # Multidimensional scaling of all the samples on the first two dimensions, with dots instead of labels
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_d23_labs.pdf # Multidimensional scaling of all the samples on the first two dimensions, with labels instead of dots
 
-- Examples:
-
 .. _fig-bcv-deg:
+
+- Examples:
 
 .. figure:: images/BCV_RNAseq_epicc_ColCEN.png
    :alt: BCV_RNAseq_epicc_ColCEN
@@ -649,9 +649,9 @@ Perfomed with ComplexUpset.
 
 	results/combined/plots/Upset_combined_peaks__all_chip__<analysis_name>__<ref_genome>.pdf
 
-- Example:
-
 .. _fig-upset-peaks:
+
+- Example:
 
 .. figure:: images/Upset_combined_peaks__all_chip__epicc__ColCEN.png
    :alt: Upset_combined_peaks__all_chip__epicc__ColCEN
