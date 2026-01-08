@@ -2,6 +2,7 @@
 Output 
 ======
 
+
 Output Structure
 ================
 
@@ -39,11 +40,10 @@ Output Structure
 			├── tracks/	# Track files (bigwigs)
 			└── */		# data-specific directories (e.g. 'peaks' for ChIP, 'peaks' and 'motifs' for TF, 'DEG' for RNA, 'DMRs' and 'methylcall' for mC, 'clusters' for sRNA)
 
-Data-specific Output
-====================
 
 Histone ChIP-seq
-----------------
+================
+
 
 Output tree
 +++++++++++
@@ -60,6 +60,7 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
+
 Mapping metrics
 +++++++++++++++
 
@@ -75,9 +76,9 @@ Mapping metrics
 
 	results/combined/plots/mapping_stats_<analysis_name>_ChIP.pdf
 
-- Example:
-
 .. _fig-mapping-stats:
+
+- Example:
 
 .. figure:: images/mapping_stats_epicc_ChIP.png
    :alt: mapping_stats_epicc_ChIP
@@ -86,6 +87,7 @@ Mapping metrics
    Histogram of mapping metrics
 
 (the actual output is in pdf format)
+
 
 Peak metrics
 ++++++++++++
@@ -103,6 +105,7 @@ Peak metrics
 	results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
 
 (see :ref:`TF ChIP-seq <fig-peak-stats>` for an example)
+
 
 Fingerprints
 ++++++++++++
@@ -126,6 +129,7 @@ Performed with IDR.
 
 (see :ref:`TF ChIP-seq <fig-idr>` for an example)
 
+
 Upset Plot
 ++++++++++
 
@@ -145,8 +149,10 @@ Perfomed with ComplexUpset.
 
 (see :ref:`Combined Output <fig-upset-peaks>` for an example)
 
+
 TF ChIP-seq
------------
+===========
+
 
 Output tree
 +++++++++++
@@ -164,6 +170,7 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
+
 Mapping metrics
 +++++++++++++++
 
@@ -180,6 +187,7 @@ Mapping metrics
 	results/combined/plots/mapping_stats_<analysis_name>_TF.pdf
 
 (see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
+
 
 Peak metrics
 ++++++++++++
@@ -208,6 +216,7 @@ Peak metrics
 
 (the actual output is in pdf format)
 
+
 Fingerprints
 ++++++++++++
 
@@ -227,6 +236,7 @@ Performed with Deeptools.
 
    Fingerprint plot comparing an IP to its Input
 
+
 Irreproducible Discovery Rate
 +++++++++++++++++++++++++++++
 
@@ -245,6 +255,7 @@ Performed with IDR.
    :align: center
 
    Plot of Irreproducible Discovery Rate for two biological replicates
+
 
 Motifs
 ++++++
@@ -269,6 +280,7 @@ Performed with the MEME suite.
 
 (the actual output is in html format, and others)
 
+
 Upset Plot
 ++++++++++
 
@@ -288,8 +300,10 @@ Perfomed with ComplexUpset.
 
 (see :ref:`Combined Output <fig-upset-peaks>` for an example)
 
+
 RNA-seq
--------
+=======
+
 
 Output tree
 +++++++++++
@@ -307,6 +321,7 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from STAR and samtools)
 	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample
 
+
 Mapping metrics
 +++++++++++++++
 
@@ -323,6 +338,7 @@ Mapping metrics
 	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
 
 (see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example) 
+
 
 Differential Expression analysis
 ++++++++++++++++++++++++++++++++
@@ -404,6 +420,7 @@ Counts from STAR; analysis performed with EdgeR.
 
    Histogram of gene expression (RPKM) in the different samples (dots = biological replicates, bar = mean) for one differentially expressed gene
 
+
 Gene Ontology analysis
 ++++++++++++++++++++++
 
@@ -439,8 +456,10 @@ If not enough terms are enriched, these plots might not be created.
 
 (the actual output is in pdf format)
 
+
 small RNA-seq
--------------
+=============
+
 
 Output tree
 +++++++++++
@@ -455,6 +474,7 @@ Output tree
 	├── mapped/	# Subfolders of ShortStack output for each replicate
 	├── reports/	# QC reports (output from Cutadapt) and summary of size statistics
 	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample for each size chosen (default, 21, 22, 23 and 24nt)
+
 
 Mapping statistics
 ++++++++++++++++++
@@ -479,6 +499,7 @@ Mapping statistics
    :align: center
 
    Histogram of size distribution in small RNA samples
+
 
 Cluster and Differential Expression analysis
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -514,6 +535,7 @@ Counts from ShortStack; analysis performed with EdgeR.
 
 (See :ref:`RNAseq <fig-bcv-deg>` for examples)
 
+
 Upset Plot
 ++++++++++
 
@@ -539,8 +561,10 @@ Perfomed with ComplexUpset.
 
    Upset plot of small RNA clusters
 
+
 DNA methylation
----------------
+===============
+
 
 Output tree
 +++++++++++
@@ -556,6 +580,7 @@ Output tree
 	├── methylcall/	# CX report (Bismark output) of methylation calls per cytosines
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and methylation statistics (output from Bismark)
 	└── tracks/	# Track files (bigwigs); strand-specific and merged methylation values (from 0 to 100%) for each replicate and all replicates of each sample merged
+
 
 Mapping metrics
 +++++++++++++++
@@ -574,6 +599,7 @@ Mapping metrics
 
 (see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
 
+
 Methylation Calls
 +++++++++++++++++
 
@@ -586,6 +612,7 @@ Performed with Bismark
 	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.M-bias.txt # M-bias data output from Bismark
 	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated_splitting_report.txt # Methylation extraction statistics output from Bismark
 	results/mC/methylcall/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.CX_report.txt.gz # Table with methylation values and coverage for each cytosine of the genome
+
 
 Differential Methylated Regions analysis
 ++++++++++++++++++++++++++++++++++++++++
@@ -600,8 +627,10 @@ Performed with DMRcaller
 
 	results/mC/DMRs/summary__<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__DMRs.txt # summary table with the number of Hyper- and Hypo-methylated regions in each sequence context between sample1 and sample2
 
+
 Combined Output
 ===============
+
 
 Upset Plot
 ++++++++++
@@ -630,6 +659,7 @@ Perfomed with ComplexUpset.
 
    Upset plot of peaks in all histone and TF ChIP-seq samples
 
+
 Heatmaps and metaplots
 ++++++++++++++++++++++
 
@@ -656,7 +686,7 @@ Performed with Deeptools.
 	results/combined/matrix/sorted_final_matrix_tes__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TES for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`)
 	results/combined/matrix/Heatmap__tes__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions aligned on TES of all genes in sorted order of all samples except mC
 
-	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
+	#optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file
 
 - Heatmaps::
 
@@ -672,7 +702,7 @@ Performed with Deeptools.
 	results/combined/plots/Heatmap_sorted__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`)
 	results/combined/plots/Heatmap__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, sorted by mean of all these mC samples (if `heatmap_sort_mc_after_others` is set to `false`)
 
-	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
+	#optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file
 
 - Examples::
 
@@ -705,7 +735,7 @@ Performed with Deeptools.
 	results/combined/plots/Profile__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of mC samples on all genes (each sample on its own plot).
 	results/combined/plots/Profile_pergroup__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of mC samples on all genes (all samples on the same plot, can get messy).
 
-	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
+	#optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file
 
 - Examples::
 
