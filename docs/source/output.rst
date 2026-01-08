@@ -60,8 +60,8 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
-Mapping statistics
-++++++++++++++++++
+Mapping metrics
++++++++++++++++
 
 - Data for each sample::
 
@@ -77,12 +77,18 @@ Mapping statistics
 
 - Example:
 
-.. image:: images/mapping_stats_epicc_ChIP.png
+.. _fig-mapping-stats:
+
+.. figure:: images/mapping_stats_epicc_ChIP.png
+   :alt: mapping_stats_epicc_ChIP
+   :align: center
+
+   Histogram of mapping metrics
 
 (the actual output is in pdf format)
 
-Peak statistics
-+++++++++++++++
+Peak metrics
+++++++++++++
 
 - Data for each sample:: 
 
@@ -96,7 +102,7 @@ Peak statistics
 
 	results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
 
-(see TF ChIP-seq for an example)
+(see :ref:`TF ChIP-seq <fig-peak-stats>` for an example)
 
 Fingerprints
 ++++++++++++
@@ -107,7 +113,7 @@ Performed with Deeptools.
 
 	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
 
-(see TF ChIP-seq for an example) 
+(see :ref:`TF ChIP-seq <fig-fingerprint>` for an example) 
 
 IDR
 +++
@@ -118,7 +124,7 @@ Performed with IDR.
 
 	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
-(see TF ChIP-seq for an example)
+(see :ref:`TF ChIP-seq <fig-idr>` for an example)
 
 Upset Plot
 ++++++++++
@@ -137,7 +143,7 @@ Perfomed with ComplexUpset.
 
 	results/combined/plots/Upset_combined_peaks__ChIP__<analysis_name>__<ref_genome>.pdf
 
-(see Combined Output for an example)
+(see :ref:`Combined Output <fig-upset-peaks>` for an example)
 
 TF ChIP-seq
 -----------
@@ -158,8 +164,8 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
 	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
 
-Mapping statistics
-++++++++++++++++++
+Mapping metrics
++++++++++++++++
 
 - Data for each sample:: 
 
@@ -173,10 +179,10 @@ Mapping statistics
 	
 	results/combined/plots/mapping_stats_<analysis_name>_TF.pdf
 
-(see histone ChIP-seq for an example) 
+(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
 
-Peak statistics
-+++++++++++++++
+Peak metrics
+++++++++++++
 
 - Data for each sample::
 
@@ -192,7 +198,13 @@ Peak statistics
 
 - Example:
 
-.. image:: images/peak_stats_epicc_TF.png
+.. _fig-peak-stats:
+
+.. figure:: images/peak_stats_epicc_TF.png
+   :alt: peak_stats_epicc_TF
+   :align: center
+
+   Histogram of peak metrics
 
 (the actual output is in pdf format)
 
@@ -207,20 +219,32 @@ Performed with Deeptools.
 
 - Example:
 
-.. image:: images/Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN.png
+.. _fig-fingerprint:
 
-IDR
-+++
+.. figure:: images/Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN.png
+   :alt: Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN
+   :align: center
+
+   Fingerprint plot comparing an IP to its Input
+
+Irreproducible Discovery Rate
++++++++++++++++++++++++++++++
 
 Performed with IDR.
 
-- Plot for pairs of biological replicate::
+- Plot for pairs of biological replicates::
 
 	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
 
 - Example:
 
-.. image:: images/idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak.png
+.. _fig-idr:
+
+.. figure:: images/idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak.png
+   :alt: idr_se__TF_SUVH1__Col0__suvh1.1__IP__Rep1_vs_Rep2__ColCEN_peaks.narrowPeak
+   :align: center
+
+   Plot of Irreproducible Discovery Rate for two biological replicates
 
 Motifs
 ++++++
@@ -237,9 +261,13 @@ Performed with the MEME suite.
 
 - Example:
 
-.. image:: images/meme.png
+.. figure:: images/meme.png
+   :alt: meme
+   :align: center
 
-(the actual output is html format, and others)
+   Screenshot of HMTL output from meme
+
+(the actual output is in html format, and others)
 
 Upset Plot
 ++++++++++
@@ -258,7 +286,7 @@ Perfomed with ComplexUpset.
 
 	results/combined/plots/Upset_combined_peaks__TF__<analysis_name>__<ref_genome>.pdf
 
-(see Combined Output for an example)
+(see :ref:`Combined Output <fig-upset-peaks>` for an example)
 
 RNA-seq
 -------
@@ -279,8 +307,8 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from STAR and samtools)
 	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample
 
-Mapping statistics
-++++++++++++++++++
+Mapping metrics
++++++++++++++++
 
 - Data for each sample::
 
@@ -294,7 +322,7 @@ Mapping statistics
 	
 	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
 
-(see histone ChIP-seq for an example) 
+(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example) 
 
 Differential Expression analysis
 ++++++++++++++++++++++++++++++++
@@ -335,9 +363,19 @@ Counts from STAR; analysis performed with EdgeR.
 
 - Examples:
 
-.. image:: images/BCV_RNAseq_epicc_ColCEN.png
+.. _fig-bcv-deg:
 
-.. image:: images/MDS2.png
+.. figure:: images/BCV_RNAseq_epicc_ColCEN.png
+   :alt: BCV_RNAseq_epicc_ColCEN
+   :align: center
+
+   BCV plot for all genes
+
+.. figure:: images/MDS2.png
+   :alt: MDS2
+   :align: center
+
+   MDS plot for all RNA-seq samples
 
 - Heatmap of all DEGs across all samples::
 	
@@ -346,7 +384,11 @@ Counts from STAR; analysis performed with EdgeR.
 
 - Example:
 
-.. image:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
+.. figure:: images/Heatmap_RNAseq_cpm__epicc__ColCEN.png
+   :alt: Heatmap_RNAseq_cpm__epicc__ColCEN
+   :align: center
+
+   Heatmap of expression (CPM) in all samples for all the differentially expressed genes in this analysis
 
 (the actual output is in pdf format)
 
@@ -356,7 +398,11 @@ Counts from STAR; analysis performed with EdgeR.
 
 - Example:
 
-.. image:: images/RNAseq_expression.png
+.. figure:: images/RNAseq_expression.png
+   :alt: RNAseq_expression
+   :align: center
+
+   Histogram of gene expression (RPKM) in the different samples (dots = biological replicates, bar = mean) for one differentially expressed gene
 
 Gene Ontology analysis
 ++++++++++++++++++++++
@@ -383,9 +429,13 @@ Performed with rrvgo and TopGO.
 
 If not enough terms are enriched, these plots might not be created.
 
-- Example (BP_DOWN):
+- Example:
 
-.. image:: images/topGO_DOWN_in_Col0__suvh13_BP_treemap.png
+.. figure:: images/topGO_DOWN_in_Col0__suvh13_BP_treemap.png
+   :alt: topGO_DOWN_in_Col0__suvh13_BP_treemap
+   :align: center
+
+   Treemap of the enriched Gene Ontology term of the Biological Process class in unique Down-regulated genes of this sample 
 
 (the actual output is in pdf format)
 
@@ -424,7 +474,11 @@ Mapping statistics
 
 - Example::
 
-.. image:: images/srna_sizes_stats_epicc_sRNA.png
+.. figure:: images/srna_sizes_stats_epicc_sRNA.png
+   :alt: srna_sizes_stats_epicc_sRNA
+   :align: center
+
+   Histogram of size distribution in small RNA samples
 
 Cluster and Differential Expression analysis
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -458,7 +512,7 @@ Counts from ShortStack; analysis performed with EdgeR.
 	results/combined/plots/MDS_RNAseq_<analysis_name>_<ref_genome>_<d12|d12_labs|d23|d23_labs>.pdf # Multidimensional scaling, all four versions
 	results/combined/plots/Heatmap_sRNA_<cpm|zscore>__<analysis_name>__<ref_genome>__on_new_clusters.pdf # expression values accross all differentially regulated clusters by count per million and zscore
 
-(See RNAseq for examples)
+(See :ref:`RNAseq <fig-bcv-deg>` for examples)
 
 Upset Plot
 ++++++++++
@@ -479,7 +533,11 @@ Perfomed with ComplexUpset.
 
 - Example:
 
-.. image:: images/Upset_combined_clusters__sRNA__epicc__ColCEN.png
+.. figure:: images/Upset_combined_clusters__sRNA__epicc__ColCEN.png
+   :alt: Upset_combined_clusters__sRNA__epicc__ColCEN
+   :align: center
+
+   Upset plot of small RNA clusters
 
 DNA methylation
 ---------------
@@ -499,8 +557,8 @@ Output tree
 	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and methylation statistics (output from Bismark)
 	└── tracks/	# Track files (bigwigs); strand-specific and merged methylation values (from 0 to 100%) for each replicate and all replicates of each sample merged
 
-Mapping statistics
-++++++++++++++++++
+Mapping metrics
++++++++++++++++
 
 - Data for each sample::
 
@@ -514,7 +572,7 @@ Mapping statistics
 	
 	results/combined/plots/mapping_stats_<analysis_name>_mC.pdf
 
-(see histone ChIP-seq for an example)
+(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
 
 Methylation Calls
 +++++++++++++++++
@@ -564,7 +622,13 @@ Perfomed with ComplexUpset.
 
 - Example:
 
-.. image:: images/Upset_combined_peaks__all_chip__epicc__ColCEN.png
+.. _fig-upset-peaks:
+
+.. figure:: images/Upset_combined_peaks__all_chip__epicc__ColCEN.png
+   :alt: Upset_combined_peaks__all_chip__epicc__ColCEN
+   :align: center
+
+   Upset plot of peaks in all histone and TF ChIP-seq samples
 
 Heatmaps and metaplots
 ++++++++++++++++++++++
@@ -577,16 +641,86 @@ Performed with Deeptools.
 
 - Deeptool matrices and sorted region files::
 
-	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for all samples except mC on all genes; also present "tss" and "tes" instead of "regions"
-	results/combined/matrix/final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes; also present "tss" and "tes" instead of "regions"
-	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions"
-	results/combined/matrix/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions of all genes in sorted order of all samples except mC; also present "tss" and "tes" instead of "regions"
+	results/combined/matrix/final_matrix_regions__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for all samples except mC on all genes
+	results/combined/matrix/final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes
+	results/combined/matrix/sorted_final_matrix_regions__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix scaled by regions for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/matrix/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions of all genes in sorted order of all samples except mC
+
+	results/combined/matrix/final_matrix_tss__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TSS for all samples except mC on all genes
+	results/combined/matrix/final_matrix_tss__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TSS for mC samples on all genes
+	results/combined/matrix/sorted_final_matrix_tss__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TSS for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/matrix/Heatmap__tss__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions aligned on TSS of all genes in sorted order of all samples except mC
+
+	results/combined/matrix/final_matrix_tes__most__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TES for all samples except mC on all genes
+	results/combined/matrix/final_matrix_tes__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TES for mC samples on all genes
+	results/combined/matrix/sorted_final_matrix_tes__mC__<analysis_name>__<ref_genome>__all_genes.gz # matrix of regions aligned on TES for mC samples on all genes sorted according to other samples (only present if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/matrix/Heatmap__tes__most__<analysis_name>__<ref_genome>__all_genes_sorted_regions.bed # bed-file of regions aligned on TES of all genes in sorted order of all samples except mC
+
+	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
 
 - Heatmaps::
 
-	results/combined/plots/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of all samples except mC, sorted by mean (default, can be changed in configuration); also present "tss" and "tes" instead of "regions"
-	results/combined/plots/Heatmap_sorted__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`); also present "tss" and "tes" instead of "regions"
-	results/combined/plots/Heatmap__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`); also present "tss" and "tes" instead of "regions"
-	
+	results/combined/plots/Heatmap__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of all samples except mC, sorted by mean (default, can be changed in configuration)
+	results/combined/plots/Heatmap_sorted__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/plots/Heatmap__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps scaled by regions of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`)
+
+	results/combined/plots/Heatmap__tss__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of all samples except mC, sorted by mean (default, can be changed in configuration)
+	results/combined/plots/Heatmap_sorted__tss__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/plots/Heatmap__tss__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, sorted by mean (default, can be changed in configuration if `heatmap_sort_mc_after_others` is set to `false`)
+
+	results/combined/plots/Heatmap__tes__most__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of all samples except mC, sorted by mean of all these samples (default, can be changed in configuration)
+	results/combined/plots/Heatmap_sorted__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, in the same sort order than all other samples above (if `heatmap_sort_mc_after_others` is set to `true`)
+	results/combined/plots/Heatmap__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # heatmaps of regions aligned on TSS of mC samples, sorted by mean of all these mC samples (if `heatmap_sort_mc_after_others` is set to `false`)
+
+	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
+
+- Examples::
+
+.. figure:: images/Heatmap__regions__most__epicc__ColCEN__all_genes.png
+   :alt: Heatmap__regions__most__epicc__ColCEN__all_genes
+   :align: center
+
+   Heatmap of scaled regions for all samples but mC at all genes
+
+.. figure:: images/Heatmap_sorted__regions__mC__epicc__ColCEN__all_genes.png
+   :alt: Heatmap_sorted__regions__mC__epicc__ColCEN__all_genes
+   :align: center
+
+   Heatmap of scaled regions for mC samples at all genes in the same sorted order than above
+
+- Metaplots::
+
+	results/combined/plots/Profile__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) scaled by regions of all samples except mC on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__regions__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) scaled by regions of all samples except mC on all genes (all samples on the same plot, can get messy).
+	results/combined/plots/Profile__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) scaled by regions of mC samples on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__regions__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) scaled by regions of mC samples on all genes (all samples on the same plot, can get messy).
+
+	results/combined/plots/Profile__tss__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TSS of all samples except mC on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__tss__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TSS of all samples except mC on all genes (all samples on the same plot, can get messy).
+	results/combined/plots/Profile__tss__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TSS of mC samples on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__tss__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TSS of mC samples on all genes (all samples on the same plot, can get messy).
+
+	results/combined/plots/Profile__tes__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of all samples except mC on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__tes__most__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of all samples except mC on all genes (all samples on the same plot, can get messy).
+	results/combined/plots/Profile__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of mC samples on all genes (each sample on its own plot).
+	results/combined/plots/Profile_pergroup__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of mC samples on all genes (all samples on the same plot, can get messy).
+
+	(optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file)
+
+- Examples::
+
+.. figure:: images/Profile__tss__mC__epicc__ColCEN__all_genes.png
+   :alt: Profile__tss__mC__epicc__ColCEN__all_genes
+   :align: center
+
+   Metaplot of all genes aligned on their TSS for mC samples
+
+.. figure:: images/Profile_pergroup__tss__mC__epicc__ColCEN__all_genes.png
+   :alt: Profile_pergroup__tss__mC__epicc__ColCEN__all_genes
+   :align: center
+
+   Metaplot of all genes aligned on their TSS for mC samples on the same plot
+
+(the actual outputs are in pdf format)
 
 
