@@ -291,9 +291,9 @@ Configuration Options
 	+ ``aligned_bams``: When ``true`` you can directly provide alignment files for ChIP-seq data (either histone modifications or TF). A single SAM or BAM file must be present in the ``fastq_path`` folder matching the ``seq_id`` value in the metadata samplefile (same logic than when providing raw fastq file locally). No mapping stats plot will be available when providing bam files this way. Default is ``false``.
 	+ Note: These settings are applied to *all* samples in the analysis. If you have some samples to analyze from scratch and other already in an intermediate file, follow the following steps:
 
-		1) run the pipeline once with the samples to run from scratch using the `map_only` intermediate target: `snakemake --cores 1 map_only` 
+		1) run the pipeline once with the samples to run from scratch using the ``map_only`` intermediate target: ``snakemake --cores 1 map_only`` 
 		2) add the samples you already have intermediate files for in the samplefile and change the corresponding parameters in the config file. 
-		3) run the pipeline normally again: `snakemake --cores 1`.
+		3) run the pipeline normally again: ``snakemake --cores 1``.
 
 		These steps can be repeated if you have raw data, trimmed fastqs and bam files, first creating all the fastq files and then the bam files.
 
