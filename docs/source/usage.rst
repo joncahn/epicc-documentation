@@ -2,6 +2,7 @@
 Usage
 =====
 
+
 Running the pipeline
 ====================
 
@@ -33,6 +34,7 @@ If you do not want all the snakemake output (very talkative), instead of using `
 
 *For full understanding of snakemake capabilities and options: https://snakemake.readthedocs.io/en/stable/*
 
+
 Intermediate Target Rules
 =========================
 
@@ -50,10 +52,12 @@ In addition to the additional output plots below, two rules can be specified as 
 	- ``coverage_chip``: Creates bigwig files of coverage for all ChIP samples. The binsize is by default 1bp (can be updated in the config file ``chip_tracks: binsize: 1``). 
 	Usage: ``snakemake --cores 1 coverage_chip``
 
+
 Additional Output Options
 =========================
 
 Below is a list of *cool* outputs that can be generated once whole pipeline ran once. You'll find a basic structure for how to tell snakemake to generate them, feel free to replace the --cores 1 with the HPC profile you would rather use.
+
 
 Plotting RNAseq expression levels on target genes
 +++++++++++++++++++++++++++++++++++++++++++++++++
@@ -75,6 +79,9 @@ An example where <analysis_name>="test_smk" and <ref_genome>="TAIR10", while set
   snakemake --cores 1 results/RNA/plots/plot_expression__test_smk__TAIR10__my_genes_of_interests.pdf --config rnaseq_target_file="data/target_genes.txt" rnaseq_target_file_label="my_genes_of_interests"
 
 Output is a single pdf file named ``results/RNA/plots/plot_expression__<analysis_name>__<ref_genome>__<rnaseq_target_file_label>.pdf`` where each gene of the list is on an individual page.
+
+See :ref:`Example output <fig-rna-exp-level>`.
+
 
 Performing GO analysis on target genes
 ++++++++++++++++++++++++++++++++++++++
@@ -98,6 +105,9 @@ An example where <analysis_name>="test_smk" and <ref_genome>="ColCEN", while set
   snakemake --cores 1 results/RNA/GO/TopGO__test_smk__ColCEN__my_genes_of_interests.done --config rnaseq_target_file="data/target_genes.txt" rnaseq_target_file_label="my_genes_of_interests"
 
 Output are two pdf files, one for the biological process terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_BP_treemap.pdf`` and one for the molecular function terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_MF_treemap.pdf``. Corresponding tables listing the terms enriched for each gene of the ``rnaseq_target_file`` are also generated at ``results/RNA/GO/topGO_<rnaseq_target_file_label>_<BP|MF>_<GOs|GIDs>.txt`` for a focus on the GO terms or the GIDs, respectively.
+
+See :ref:`Example output <ref-go-analysis>`.
+
 
 Finding motifs on target regions
 ++++++++++++++++++++++++++++++++
@@ -126,6 +136,9 @@ When setting ``motif_ref_genome``, it is safer to use a reference genome that ha
 
 For the target file chosen ``motif_target_file``, if the regions are over 500bp, only the middle 400bp will be used.
 
+See :ref:`Example output <ref-motifs-analysis>`.
+
+
 Performing sRNA differential analysis on regions
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -150,6 +163,9 @@ Output is the results folder from Shortstack limited to this loci file, followed
 If you only want the results of Shortstack and not the differential analysis, limit the run to the rule ``analyze_all_srna_samples_on_target_file`` instead, by targeting: ``results/sRNA/clusters/<analysis_name>__<ref_genome>__on_<srna_target_file_label>/Counts.txt``.
 
 The bed or gff file of regions **MUST HAVE** a header with a column called "Name" (the 4th column of a bed file or the 9th column of a gff3).
+
+See :ref:`Example output <ref-cluster-diff-expression>`.
+
 
 Plotting heatmap on regions
 +++++++++++++++++++++++++++
@@ -195,6 +211,9 @@ The color scheme of the heatmap is "seismic" for all samples and "Oranges" for m
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
+See :ref:`Example output <fig-heatmap-deeptools>`.
+
+
 Plotting metaplot profiles on regions
 +++++++++++++++++++++++++++++++++++++
 
@@ -219,6 +238,9 @@ By default, the profiles represent the "mean" accross all regions. This can be c
 By default, the type of plots are "lines". See deeptools documentation for other options and edit ``profiles_plot_params`` in the config file.
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
+
+See :ref:`Example output <fig-metaplot-deeptools>`.
+
 
 Plotting browser screenshots on regions
 +++++++++++++++++++++++++++++++++++++++
@@ -246,6 +268,9 @@ Hightlights columns are optional, and correspond to regions of the browser that 
 Use <env>="all" to include all samples, "most" for all data-types except mC, or any single environment for data type-specific browsers [all, most, ChIP, TF, RNA, sRNA, mC].
 
 By default, no TE file is used. If you want to add TE annotations, supply a bed-file in the config file ``browser_TE_file``.
+
+See :ref:`Example output <fig-browser-plot>`.
+
 
 Rerunning a specific analysis
 ++++++++++++++++++++++++++++++
