@@ -256,7 +256,7 @@ Performed with IDR.
 
    Plot of Irreproducible Discovery Rate for two biological replicates
 
-.. _ref-motifs_analysis:
+.. _ref-motifs-analysis:
 
 Motifs
 ++++++
@@ -763,3 +763,23 @@ Performed with Deeptools.
 (the actual outputs are in pdf format)
 
 
+Browser screenshots
++++++++++++++++++++
+
+Performed with Gviz.
+
+- Browser shot over whole chromosomes::
+
+	results/combined/plots/Browser_full_chromosomes__all__epicc__ColCEN.pdf # Browser of all the samples on full-length chromsomes
+
+.. _fig-browser-plot:
+
+- Example::
+
+.. figure:: images/Browser_full_chromosomes__all__epicc__ColCEN.png
+   :alt: Browser_full_chromosomes__all__epicc__ColCEN
+   :align: center
+
+   Browser shot of full-length chromosome1 (binsize 50kb)
+
+(the actual output is in pdf format)
