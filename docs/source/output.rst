@@ -256,6 +256,7 @@ Performed with IDR.
 
    Plot of Irreproducible Discovery Rate for two biological replicates
 
+.. _ref-motifs_analysis:
 
 Motifs
 ++++++
@@ -412,6 +413,8 @@ Counts from STAR; analysis performed with EdgeR.
 	
 	results/combined/plots/plot_expression__<analysis_name>__<ref_genome>__unique_DEGs.pdf
 
+.. _fig-rna-exp-level:
+
 - Example:
 
 .. figure:: images/RNAseq_expression.png
@@ -420,6 +423,7 @@ Counts from STAR; analysis performed with EdgeR.
 
    Histogram of gene expression (RPKM) in the different samples (dots = biological replicates, bar = mean) for one differentially expressed gene
 
+.. _ref-go-analysis:
 
 Gene Ontology analysis
 ++++++++++++++++++++++
@@ -500,6 +504,7 @@ Mapping statistics
 
    Histogram of size distribution in small RNA samples
 
+.. _ref-cluster-diff-expression:
 
 Cluster and Differential Expression analysis
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -704,6 +709,8 @@ Performed with Deeptools.
 
 	#optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file
 
+.. _fig-heatmap-deeptools:
+
 - Examples::
 
 .. figure:: images/Heatmap__regions__most__epicc__ColCEN__all_genes.png
@@ -736,6 +743,8 @@ Performed with Deeptools.
 	results/combined/plots/Profile_pergroup__tes__mC__<analysis_name>__<ref_genome>__all_genes.pdf # Metaplots of mean using lines (defaults, can be changed in configuration) aligned on TES of mC samples on all genes (all samples on the same plot, can get messy).
 
 	#optional: if TE analysis is set to true, the same files will be generated for all regions in the provided TE file
+
+.. _fig-metaplot-deeptools:
 
 - Examples::
 
