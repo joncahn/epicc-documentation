@@ -772,8 +772,6 @@ Performed with Gviz.
 
 	results/combined/plots/Browser_full_chromosomes__all__epicc__ColCEN.pdf # Browser of all the samples on full-length chromsomes
 
-.. _fig-browser-plot:
-
 - Example::
 
 .. figure:: images/Browser_full_chromosomes__all__epicc__ColCEN.png
@@ -781,5 +779,20 @@ Performed with Gviz.
    :align: center
 
    Browser shot of full-length chromosome1 (binsize 50kb)
+
+- Browser shot over target regions::
+
+	results/combined/plots/Browser_interesting_genes__all__epicc__ColCEN.pdf # Browser of all the samples at the target loci `data/target_loci.bed`
+
+.. _fig-browser-plot:
+
+- Example::
+
+.. figure:: images/Browser_DDM1.png
+   :alt: Browser_DDM1
+   :align: center
+
+   Browser shot around a target loci, here the region surrounding the DDM1 gene (binsize 1bp)
+
 
 (the actual output is in pdf format)
