@@ -301,7 +301,7 @@ See :ref:`Example output <fig-browser-plot>`.
 Rerunning a specific analysis
 ++++++++++++++++++++++++++++++
 
-Changing parameters in the config file should trigger a rerun of the impacted samples. Several instances of the epicc pipeline can thus be chained to change some parameters in a script, for example:
+Changing parameters in the config file should trigger a rerun of the impacted samples. Similarly, changing the samples in the samplefile will rerun the analysis. This can be useful to focus the analysis on only a subset of samples, notably for plotting browsers and heatmaps/metaplots to avoid overcrowded images. Several instances of the epicc pipeline can also be chained to change some parameters in a script, for example:
 
 ::
 
@@ -309,7 +309,7 @@ Changing parameters in the config file should trigger a rerun of the impacted sa
     snakemake --profile profiles/slurm results/combined/plots/Heatmap__regions__most__test_smk_${scale}__ColCEN__interesting_genes.pdf --config heatmap_target_file="data/target_genes.bed" heatmap_target_file_label="interesting_genes" heatmaps_scales=${scale}
   done
 
-Otherwise, to rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
+If snakemake says that all the file are already present and you would still like to rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
 e.g ``snakemake --cores 1 results/combined/plots/srna_sizes_stats_test_snakemake_sRNA.pdf --force``
 
 If only the combined analysis is to be performed, and not everything else, delete all the chkpts files in ``results/combined/chkpts/`` as well as in the chkpt of each relevant environment ``results/<env>/chkpts/<env>_analysis__<analysis_name>__<ref_genome>.done``.
