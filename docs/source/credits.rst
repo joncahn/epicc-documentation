@@ -62,4 +62,4 @@ This pipeline is only a combination of great tools developped by others. A non-e
 Acknowledgements
 ----------------
 
-In addition to all the contributors to the development of the pipeline, special thanks to the members of the Martienssen lab for their support and help, and to Thomas Dahl for the EPICC logo.
+In addition to all the contributors to the development of the pipeline, special thanks to the members of the Martienssen lab for their support and help, to Thomas Dahl for the EPICC logo, and to Howard Hughes Medical Institute and Cold Spring Harbor Laboratory for funding and computational resources.
