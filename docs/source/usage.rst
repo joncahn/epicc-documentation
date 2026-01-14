@@ -80,6 +80,8 @@ An example where <analysis_name>="test_smk" and <ref_genome>="TAIR10", while set
 
 Output is a single pdf file named ``results/RNA/plots/plot_expression__<analysis_name>__<ref_genome>__<rnaseq_target_file_label>.pdf`` where each gene of the list is on an individual page.
 
+**This option is particularly useful if after a first analysis you want to further investigate RNAseq expression levels of genes identified through other aspects of the analysis, such genes closer to peaks of a TF/histone modification, small RNA clusters or DMRs. To do so, you'll need to extract the GIDs of interests and use these as a target file.**
+
 See :ref:`Example output <fig-rna-exp-level>`.
 
 
@@ -105,6 +107,8 @@ An example where <analysis_name>="test_smk" and <ref_genome>="ColCEN", while set
   snakemake --cores 1 results/RNA/GO/TopGO__test_smk__ColCEN__my_genes_of_interests.done --config rnaseq_target_file="data/target_genes.txt" rnaseq_target_file_label="my_genes_of_interests"
 
 Output are two pdf files, one for the biological process terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_BP_treemap.pdf`` and one for the molecular function terms ``results/RNA/plots/topGO_<rnaseq_target_file_label>_MF_treemap.pdf``. Corresponding tables listing the terms enriched for each gene of the ``rnaseq_target_file`` are also generated at ``results/RNA/GO/topGO_<rnaseq_target_file_label>_<BP|MF>_<GOs|GIDs>.txt`` for a focus on the GO terms or the GIDs, respectively.
+
+**This option is particularly useful if after a first analysis you want to further investigate the potential function of genes identified through other aspects of the analysis, such genes closer to peaks of a TF/histone modification, small RNA clusters or DMRs. To do so, you'll need to extract the GIDs of interests and use these as a target file.**
 
 See :ref:`Example output <ref-go-analysis>`.
 
@@ -136,6 +140,8 @@ When setting ``motif_ref_genome``, it is safer to use a reference genome that ha
 
 For the target file chosen ``motif_target_file``, if the regions are over 500bp, only the middle 400bp will be used.
 
+**This option is particularly useful if after a first analysis you want to further investigate the TF motifs present in other regions identified in the analysis, such as peaks of a histone modification, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
+
 See :ref:`Example output <ref-motifs-analysis>`.
 
 
@@ -163,6 +169,8 @@ Output is the results folder from Shortstack limited to this loci file, followed
 If you only want the results of Shortstack and not the differential analysis, limit the run to the rule ``analyze_all_srna_samples_on_target_file`` instead, by targeting: ``results/sRNA/clusters/<analysis_name>__<ref_genome>__on_<srna_target_file_label>/Counts.txt``.
 
 The bed or gff file of regions **MUST HAVE** a header with a column called "Name" (the 4th column of a bed file or the 9th column of a gff3).
+
+**This option is particularly useful if after a first analysis you want to further investigate the potential differential small RNAs expression over regions identified in the analysis, such as peaks of a specific transcription factors, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
 
 See :ref:`Example output <ref-cluster-diff-expression>`.
 
@@ -211,6 +219,8 @@ The color scheme of the heatmap is "seismic" for all samples and "Oranges" for m
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
+**This option is particularly useful if after a first analysis you want to further investigate the profiles of some samples over regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
+
 See :ref:`Example output <fig-heatmap-deeptools>`.
 
 
@@ -225,13 +235,19 @@ To run the analysis:
 
   snakemake --cores 1 results/combined/plots/Profile__<matrix_param>__<env>__<analysis_name>__<ref_genome>__<target_name>.pdf
 
+It is also possible to modify the target file and the label when launching the snakemake command, for example:
+
+::
+
+	snakemake --cores 1 results/combined/plots/Profile__regions__most__test_smk__ColCEN__interesting_genes.pdf --config heatmap_target_file="data/target_genes.bed" heatmap_target_file_label="interesting_genes"
+
 Similar to heatmap above for the <matrix_param> options.
 
 Use <env>="all" to include all samples (mC and others).
 
 Output is two pdf files, where the samples are grouped by regions or not.
 
-By default, the heatmaps will be scaled by type (i.e. each ChIP mark, each TF, RNAseq, each sRNAseq size and each mC context on their appropriate scale based on the values in the heatmap). It can be changed to "default", where a single scale is used for the whole heatmap, or to "sample" where each sample is scaled individually. This can be changed in the config file ``heatmaps_scales``.
+By default, the profiles will be scaled by type (i.e. each ChIP mark, each TF, RNAseq, each sRNAseq size and each mC context on their appropriate scale based on the values in the heatmap). It can be changed to "default", where a single scale is used for all the samples, or to "sample" where each sample is scaled individually. This can be changed in the config file ``heatmaps_scales``.
 
 By default, the profiles represent the "mean" accross all regions. This can be changed in the config file ``profile_scale`` to "median".
 
@@ -239,13 +255,15 @@ By default, the type of plots are "lines". See deeptools documentation for other
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
+**This option is particularly useful if after a first analysis you want to further investigate the profiles of some samples over regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
+
 See :ref:`Example output <fig-metaplot-deeptools>`.
 
 
 Plotting browser screenshots on regions
 +++++++++++++++++++++++++++++++++++++++
 
-Given a region file, it will plot a browser screenshot using R packages. Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. 
+Given a region file, it will plot a browser screenshot using Gviz on R. Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. 
 
 To run the analysis: 
 
@@ -253,32 +271,35 @@ To run the analysis:
 
   snakemake --cores 1 results/combined/plots/Browser_<target_name>__<env>__<analysis_name>__<ref_genome>.pdf
 
+It is also possible to modify the target file and the label when launching the snakemake command, for example:
+
+::
+
+	snakemake --cores 1 results/combined/plots/Browser_interesting_genes__all__test_smk__ColCEN.pdf --config browser_target_file="data/target_loci.bed" heatmap_target_file_label="interesting_genes"
+
 The target file is a bed-like file, with the following columns: 
 
-+------+-------+------+-------+---------+----------------------------+----------------------------+
-| Chr  | Start | End  | ID    | Binsize | Higlight_starts (optional) | Higlight_widths (optional) |
-+======+=======+======+=======+=========+============================+============================+
-| chr1 | 1000  | 5000 | Peak1 | 1       | 3000,4000                  | 50,200                     |
-+------+-------+------+-------+---------+----------------------------+----------------------------+
++------+-------+------+-------+-----------------+----------------------------+----------------------------+
+| Chr  | Start | End  | ID    | Binsize (in bp) | Higlight_starts (optional) | Higlight_widths (optional) |
++======+=======+======+=======+=================+============================+============================+
+| chr1 | 1000  | 5000 | Peak1 | 1               | 3000,4000                  | 50,200                     |
++------+-------+------+-------+-----------------+----------------------------+----------------------------+
 
 Each region will be printed individually, and merged into a final PDF.
 
-Hightlights columns are optional, and correspond to regions of the browser that will be highlighted for this specific region (boxed). As many highlights can be used in a comma-separated lists, the first highlight will be in blue and all the others in red. On the above example, the region to plot is chr1:1000-5000, using col6=3000,4000 and col7=50,200 will make a blue box higlighting chr1:3000-3050 and a red one highlighting chr1:4000:4200.
+Hightlights columns are optional, and correspond to regions of the browser that will be highlighted for this specific region (boxed). As many highlights can be used in a comma-separated lists, the first highlight will be in blue and all the others in red. The positions of the beginning of the highlights (`highlight_starts`) are not relative to the `Start` coordinate of the region but are absolute coordinates on the chromosome, so they should be included within the `Start` and `End` coordinates. The highlight widths are not coordinates but the total length of the highlighted region, such that the box will be drawn from `Highlight_start` to `Highlight_start + Highlight_width`. On the above example, the region to plot is chr1:1000-5000, using col6=3000,4000 and col7=50,200 will make a blue box higlighting chr1:3000-3050 and a red one highlighting chr1:4000:4200.
 
 Use <env>="all" to include all samples, "most" for all data-types except mC, or any single environment for data type-specific browsers [all, most, ChIP, TF, RNA, sRNA, mC].
 
 By default, no TE file is used. If you want to add TE annotations, supply a bed-file in the config file ``browser_TE_file``.
+
+**This option is particularly useful if after a first analysis you want to visually investigate the profiles of some samples over individual regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
 
 See :ref:`Example output <fig-browser-plot>`.
 
 
 Rerunning a specific analysis
 ++++++++++++++++++++++++++++++
-
-To rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
-e.g ``snakemake --cores 1 results/combined/plots/srna_sizes_stats_test_snakemake_sRNA.pdf --force``
-
-If only the combined analysis is to be performed, and not everything else, delete all the chkpts files in ``results/combined/chkpts/`` as well as in the chkpt of each relevant environment ``results/<env>/chkpts/<env>_analysis__<analysis_name>__<ref_genome>.done``.
 
 Changing parameters in the config file should trigger a rerun of the impacted samples. Several instances of the epicc pipeline can thus be chained to change some parameters in a script, for example:
 
@@ -287,3 +308,8 @@ Changing parameters in the config file should trigger a rerun of the impacted sa
   for scale in default sample type; do
     snakemake --profile profiles/slurm results/combined/plots/Heatmap__regions__most__test_smk_${scale}__ColCEN__interesting_genes.pdf --config heatmap_target_file="data/target_genes.bed" heatmap_target_file_label="interesting_genes" heatmaps_scales=${scale}
   done
+
+Otherwise, to rerun a specific analysis, force snakemake to recreate the target file, adding to the snakemake command: ``<target_file> --force``
+e.g ``snakemake --cores 1 results/combined/plots/srna_sizes_stats_test_snakemake_sRNA.pdf --force``
+
+If only the combined analysis is to be performed, and not everything else, delete all the chkpts files in ``results/combined/chkpts/`` as well as in the chkpt of each relevant environment ``results/<env>/chkpts/<env>_analysis__<analysis_name>__<ref_genome>.done``.
