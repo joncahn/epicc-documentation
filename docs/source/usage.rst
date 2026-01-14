@@ -275,7 +275,7 @@ It is also possible to modify the target file and the label when launching the s
 
 ::
 
-	snakemake --cores 1 results/combined/plots/Browser_interesting_genes__all__test_smk__ColCEN.pdf --config browser_target_file="data/target_loci.bed" heatmap_target_file_label="interesting_genes"
+	snakemake --cores 1 results/combined/plots/Browser_interesting_genes__all__test_smk__ColCEN.pdf --config browser_target_file="data/target_loci.bed" browser_target_file_label="interesting_genes"
 
 The target file is a bed-like file, with the following columns: 
 
