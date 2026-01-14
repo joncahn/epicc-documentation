@@ -145,8 +145,8 @@ For the target file chosen ``motif_target_file``, if the regions are over 500bp,
 See :ref:`Example output <ref-motifs-analysis>`.
 
 
-Performing sRNA differential analysis on regions
-++++++++++++++++++++++++++++++++++++++++++++++++
+Performing sRNA differential analysis on target regions
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Given a bed or gff file, it will perform the small RNA analysis with shortstack followed by differential analysis with edgeR, using all the samples from the sample file but limiting the mapping and counts to the loci in the target file. Edit ``srna_target_file`` and ``srna_target_file_label`` in the config file. 
 
@@ -175,8 +175,8 @@ The bed or gff file of regions **MUST HAVE** a header with a column called "Name
 See :ref:`Example output <ref-cluster-diff-expression>`.
 
 
-Plotting heatmap on regions
-+++++++++++++++++++++++++++
+Plotting heatmap on target regions
+++++++++++++++++++++++++++++++++++
 
 Given a bed file, it will plot a heatmap using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
 
@@ -224,8 +224,8 @@ The size of the scaled regions ``middle`` (-m in deeptools), the size of the sur
 See :ref:`Example output <fig-heatmap-deeptools>`.
 
 
-Plotting metaplot profiles on regions
-+++++++++++++++++++++++++++++++++++++
+Plotting metaplot profiles on target regions
+++++++++++++++++++++++++++++++++++++++++++++
 
 Given a bed file, it will plot a metaplot profile using deeptools. Edit ``heatmap_target_file`` and ``heatmap_target_file_label`` in the config file. 
 
@@ -260,8 +260,8 @@ The size of the scaled regions ``middle`` (-m in deeptools), the size of the sur
 See :ref:`Example output <fig-metaplot-deeptools>`.
 
 
-Plotting browser screenshots on regions
-+++++++++++++++++++++++++++++++++++++++
+Plotting browser screenshots on target regions
+++++++++++++++++++++++++++++++++++++++++++++++
 
 Given a region file, it will plot a browser screenshot using Gviz on R. Edit ``browser_target_file`` and ``browser_target_file_label`` in the config file. 
 
