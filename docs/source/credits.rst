@@ -48,6 +48,7 @@ This pipeline is only a combination of great tools developped by others. A non-e
 - `edgeR <https://www.bioconductor.org/packages/release/bioc/html/edgeR.html>`__
 - `FastQC <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`__
 - `ggplot2 <https://ggplot2.tidyverse.org/>`__
+- `Gviz <https://ivanek.github.io/Gviz/articles/Gviz.html>`__
 - `IDR <https://github.com/nboley/idr>`__
 - `MACS2 <https://pypi.org/project/MACS2/#description>`__
 - `Python <https://www.python.org/>`__
