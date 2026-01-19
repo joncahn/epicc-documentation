@@ -53,4 +53,5 @@ Contents
    configuration
    usage
    output
+   help
    credits
