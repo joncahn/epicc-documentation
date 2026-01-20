@@ -91,7 +91,7 @@ Performing GO analysis on target genes
 
 Given a file containing a list of genes to do GO analysis on, and optionally a background file (default to all genes in the reference genome), it will perform Gene Ontology analysis.
 
-By default, GO is not performed since it requires manual input to build a database. To activate it, ``GO`` needs to be switched to ``true`` in the config file, and the files to make the GO database should be defined in the config file ``gaf_file`` and ``gene_info_file`` below the corresponding reference genome. See `Help_GO <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_Gene_Ontology>`__ for more details on how to create the GO database.
+By default, GO is not performed since it requires manual input to build a database. To activate it, ``GO`` needs to be switched to ``true`` in the config file, and the files to make the GO database should be defined in the config file ``gaf_file`` and ``gene_info_file`` below the corresponding reference genome. See :ref:`Help GO <ref-help-go-analysis>` for more details on how to create the GO database.
 
 To run it, edit the config file with the target gene list file (``rnaseq_target_file``: 1 column list of genes ID that must match the gtf file of the reference genome used, optional second column for gene labels, additional columns can be present but will not be used) and a corresponding label (``rnaseq_target_file_label``: name which will be included in the name of the output files) and run the following command, replacing <analysis_name>, <ref_genome> and <rnaseq_target_file_label> with wanted values:
 
