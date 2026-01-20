@@ -220,6 +220,8 @@ The color scheme of the heatmap is "seismic" for all samples and "Oranges" for m
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
 
+By default, a single track will be used for each sample where all the replicates are merged. If you want to plot all individual replicates, change the ``plot_allreps`` to ``true`` in the config file.
+
 **This option is particularly useful if after a first analysis you want to further investigate the profiles of some samples over regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
 
 See :ref:`Example output <fig-heatmap-deeptools>`.
@@ -255,6 +257,8 @@ By default, the profiles represent the "mean" accross all regions. This can be c
 By default, the type of plots are "lines". See deeptools documentation for other options and edit ``profiles_plot_params`` in the config file.
 
 The size of the scaled regions ``middle`` (-m in deeptools), the size of the surrounding regions ``before`` (-b in deeptools) and ``after`` (-a in deeptools) and the binsize ``binsize`` (-bs in deeptools) can be edited in the config file in ``heatmaps`` for each <matrix_params>.
+
+By default, a single track will be used for each sample where all the replicates are merged. If you want to plot all individual replicates, change the ``plot_allreps`` to ``true`` in the config file.
 
 **This option is particularly useful if after a first analysis you want to further investigate the profiles of some samples over regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
 
@@ -293,6 +297,8 @@ Hightlights columns are optional, and correspond to regions of the browser that 
 Use <env>="all" to include all samples, "most" for all data-types except mC, or any single environment for data type-specific browsers [all, most, ChIP, TF, RNA, sRNA, mC].
 
 By default, no TE file is used. If you want to add TE annotations, supply a bed-file in the config file ``browser_TE_file``.
+
+By default, a single track will be used for each sample where all the replicates are merged. If you want to plot all individual replicates, change the ``plot_allreps`` to ``true`` in the config file.
 
 **This option is particularly useful if after a first analysis you want to visually investigate the profiles of some samples over individual regions identified in the analysis, such as peaks of a specific transcription factors, small RNA clusters, differentially expressed genes or DMRs. To do so, simply use these regions of interests as target files.**
 
