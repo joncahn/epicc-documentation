@@ -84,6 +84,7 @@ Output is a single pdf file named ``results/RNA/plots/plot_expression__<analysis
 
 See :ref:`Example output <fig-rna-exp-level>`.
 
+.. _ref-new-go-analysis:
 
 Performing GO analysis on target genes
 ++++++++++++++++++++++++++++++++++++++
