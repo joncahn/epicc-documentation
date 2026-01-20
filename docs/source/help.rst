@@ -4,6 +4,7 @@ Help
 
 Specific help for additional analysis.
 
+.. _ref-help-structural-rna:
   
 Help Structural RNA database with Rfam
 ======================================
@@ -68,6 +69,8 @@ If using several files, run this command each time and concatenate the outputs, 
     gzip Rfam_ncRNAs.fa
 
 - STEP 10: Edit the `structural_rna_fafile` entry in the config file with this file (including the full path).
+
+.. _ref-help-go-analysis:
 
 Gene Ontology analysis
 ======================
