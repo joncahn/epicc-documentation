@@ -270,7 +270,7 @@ Default parameters
 - For sRNA-seq: 
 	The default is not based on Netflex v3 library preparation. If your data was made with this kit, an additional deduplication and read trimming is required. To turn it ON, change the ``netflex_v3_deduplication`` in the config file. See `Known issues #3` if you have mixed libraries.
 
-    The default is not to filter structural RNAs prior to shortstack analysis. Change ``structural_rna_depletion`` in the config file.  While this step is recommended for small interfering RNA analysis, it requires a pre-build database of fasta files. Please refer to the `Help Rfam <https://github.com/joncahn/epigeneticbutton/blob/main/Help/Help_structural_RNAs_database_with_Rfam>`__  before setting it to ``true``. This file is available for Maize in the ``data`` folder. 
+    The default is not to filter structural RNAs prior to shortstack analysis. Change ``structural_rna_depletion`` in the config file.  While this step is recommended for small interfering RNA analysis, it requires a pre-build database of fasta files. Please refer to the :ref:`Help RFAM <ref-help-structural-rna>` to generate the required file before setting it to ``true``. This file is available for Maize in the ``data`` folder. 
 
     The default is to only perform *de novo* micro RNA identification (``--dn_mirna`` argument in ShortStack). If you also want the known microRNAs, download the fasta file from `miRbase <https://www.mirbase.org>`__, filter it for your species of interest, and add to the ``srna_mapping_params`` entry in the config file ``--known_miRNAs <path/to/known_miRNA_file.fa>``.
 
