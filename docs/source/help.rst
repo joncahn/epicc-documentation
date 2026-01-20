@@ -88,7 +88,7 @@ Creating a new database
 To create a new database *de novo*, two files are required, a file linking genes to GO (``gaf_file``: <ref>_infoGO.tab, originally GAF format) and a file with information about the genes (``gene_info_file``: <ref>_genes_info.tab).
 
 These steps are to be performed before the analysis run for the GO analysis to be performed automatically with the rest of the analysis.
-If created after, run snakemake with the GO file of interest as a target. See `:ref:<>`
+If created after, run snakemake with the GO file of interest as a target. See :ref:`Usage/GO <ref-new-go-analysis>`.
 
 - STEP 1: Get the GAF file (``gaf_file``)
 
