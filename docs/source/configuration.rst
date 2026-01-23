@@ -207,6 +207,12 @@ Summary
 
 Update ``config/config.yaml`` with your paths and parameters.
   
+- Repository folder
+	This is the full path to the working directory where the repository was cloned and the results will be stored.
+
+- Analysis name
+	This is the name of the complete analysis which will be used to label the combined output files.
+
 - Sample file
 	This is the full path to the file detailed above which contain your samples metadata. 
   
