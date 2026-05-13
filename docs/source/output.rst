@@ -9,40 +9,50 @@ Output Structure
 ::
 
 	epigeneticbutton/
-	├── config/			# Location for the main config file and recommended location for sample files and target files
-	├── data/			# Location for test material and examples (e.g. zm_structural_RNAs.fa.gz)
-	├── Help/			# Location for help files (e.g. Help_structural_RNAs_database_with_Rfam)
+	├── config/			# Main options file and recommended location for sample files and target files
+	├── data/			# Test material and examples (e.g. zm_structural_RNAs.fa.gz)
+	├── Help/			# Help files (e.g. Structural_RNAs_Rfam.md, Gene_Ontology.md)
 	├── profiles/
-	│	├── sge/		# Config file to run snakemake on a cluster managed by SGE
-	│	└── slurm/		# Config file to run snakemake on a cluster managed by SLURM
+	│	├── default/		# Workflow-level per-rule resource/thread defaults
+	│	├── geno/		# Example profile for additional scheduler types
+	│	├── slurm/		# Config file to run the pipeline on a SLURM cluster
+	│	└── uge/		# Config file to run the pipeline on a UGE cluster (qsub)
+	├── tools/
+	│	└── epicc-builder.html	# Self-contained HTML5 sample sheet and options builder
 	├── workflow/
-	│	├── envs/		# Conda environment file for depencies
-	│	├── rules/		# Snakemake files with data type analysis rules
-	│	├── scripts/		# R scripts for plots
-	│	└── snakefile		# main snakefile
+	│	├── envs/		# Conda environment YAML files per analysis type
+	│	├── rules/		# Snakemake rule files by data type
+	│	├── scripts/		# R and Python scripts for analysis and plotting
+	│	└── Snakefile		# Main Snakefile
 	├── genomes/			# Genome directories created upon run
 	│	└── {ref_genome}/	# Reference genome directories with sequence, annotation and indexes
 	└── results/			# Results directories created upon run
+		├── .tmp/		# Per-job TMPDIR scratch space (auto-cleaned after each job)
 		├── combined/		# Combined analysis results
 		│	├── bedfiles/	# Peak calling results
-		│	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+		│	├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
 		│	├── logs/	# Log files
 		│	├── matrix/	# Data matrices
 		│	├── plots/	# Visualization plots
-		│	└── reports/	# Analysis reports 
-		└── <env>/	# Data type specific directories
-			├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+		│	└── reports/	# Analysis reports
+		└── <env>/		# Data type specific directories (ChIP, ATAC, RNA, sRNA, mC)
+			├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
 			├── fastq/	# Processed FASTQ files
 			├── logs/	# Log files
-			├── mapped/	# Mapped reads (bam)
+			├── mapped/	# Mapped reads (BAM)
 			├── plots/	# Data type specific plots
 			├── reports/	# QC reports
 			├── tracks/	# Track files (bigwigs)
-			└── */		# data-specific directories (e.g. 'peaks' for ChIP, 'peaks' and 'motifs' for TF, 'DEG' for RNA, 'DMRs' and 'methylcall' for mC, 'clusters' for sRNA)
+			└── */		# Data-specific directories (e.g. peaks/ for ChIP, DEG/ for RNA, DMRs/ and methylcall/ for mC, clusters/ for sRNA)
 
 
-Histone ChIP-seq
-================
+ChIP-seq, CUT&RUN, and CUT&Tag
+===============================
+
+ChIP-seq (histone marks and transcription factors), CUT&RUN, and CUT&Tag all
+share the ``ChIP/`` output directory. Assay types ``ChIP_broad``,
+``ChIP_narrow``, ``CUT_RUN_broad``, ``CUT_RUN_narrow``, ``CUT_TAG_broad``, and
+``CUT_TAG_narrow`` all route here.
 
 
 Output tree
@@ -51,14 +61,14 @@ Output tree
 ::
 
 	ChIP/
-	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
+	├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
 	├── fastq/	# Processed FASTQ files
 	├── logs/	# Log files
-	├── mapped/	# Mapped reads (bam)
-	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
-	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
-	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
+	├── mapped/	# Mapped reads (BAM)
+	├── peaks/	# Peak files for each replicate, pseudo-replicate, and merged biological replicates; includes selected peaks (shared by merged and both pseudo-replicates)
+	├── plots/	# Fingerprints (IP vs control for each IP sample); IDR plots if at least two biological replicates
+	├── reports/	# QC reports (Cutadapt/fastp) and summary of mapping statistics and peak statistics
+	└── tracks/	# Bigwigs: log2FC of IP/Input for each replicate and merged if at least 2 biological replicates
 
 
 Mapping metrics
@@ -66,13 +76,13 @@ Mapping metrics
 
 - Data for each sample::
 
-	results/ChIP/reports/summary_ChIP_<paired>_mapping_stats_ChIP__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+	results/ChIP/reports/summary_ChIP_<Read_layout>_mapping_stats_<Sample_ID>.txt
 
-- Summary table:: 
+- Summary table::
 
 	results/combined/reports/summary_mapping_stats_<analysis_name>_ChIP.txt
 
-- Plot:: 
+- Plot::
 
 	results/combined/plots/mapping_stats_<analysis_name>_ChIP.pdf
 
@@ -92,124 +102,24 @@ Mapping metrics
 Peak metrics
 ++++++++++++
 
-- Data for each sample:: 
+- Data for each sample::
 
-	results/ChIP/reports/summary_ChIP_peak_stats_ChIP__<line>__<tissue>__<sample_type>__<ref_genome>.txt
+	results/ChIP/reports/summary_ChIP_peak_stats_<Sample_ID>__<ref_genome>.txt
 
-- Summary table:: 
+- Summary table::
 
 	results/combined/reports/summary_peak_stats_<analysis_name>_ChIP.txt
 
-- Plot:: 
+- Plot::
 
 	results/combined/plots/peak_stats_<analysis_name>_ChIP.pdf
-
-(see :ref:`TF ChIP-seq <fig-peak-stats>` for an example)
-
-
-Fingerprints
-++++++++++++
-
-Performed with Deeptools.
-
-- Plot for each biological replicate:: 
-
-	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
-
-(see :ref:`TF ChIP-seq <fig-fingerprint>` for an example) 
-
-IDR
-+++
-
-Performed with IDR.
-
-- Plot for pairs of biological replicate::
-
-	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
-
-(see :ref:`TF ChIP-seq <fig-idr>` for an example)
-
-
-Upset Plot
-++++++++++
-
-Perfomed with ComplexUpset.
-
-- Table of combined peaks for all histone ChIP-seq samples in the analysis::
-
-	results/combined/bedfiles/combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
-
-- Table of combined peaks for all histone ChIP-seq samples in the analysis annotated based on the closest gene::
-
-	results/combined/bedfiles/annotated__combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
-
-- Upset plot::
-
-	results/combined/plots/Upset_combined_peaks__ChIP__<analysis_name>__<ref_genome>.pdf
-
-(see :ref:`Combined Output <fig-upset-peaks>` for an example)
-
-
-TF ChIP-seq
-===========
-
-
-Output tree
-+++++++++++
-
-::
-
-	TF/
-	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-	├── fastq/	# Processed FASTQ files
-	├── logs/	# Log files
-	├── mapped/	# Mapped reads (bam)
-	├── motifs/	# Motifs analysis with the MEME suite, one folder per selected and idr peaks (and per replicates if so chosen in the config file)
-	├── peaks/	# Peak files (MACS2 output) for each replicate, pseudo-replicate and merged biological replicates and selected peaks (shared by merged and both pseudo-replicates).
-	├── plots/	# Fingerprints (IP vs Input for each IP sample), IDR if at least two biological replicates
-	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from Bowtie2 and samtools)
-	└── tracks/	# Track files (bigwigs); log2FC of IP/Input for each rep and merged if at least 2 biological replicates
-
-
-Mapping metrics
-+++++++++++++++
-
-- Data for each sample:: 
-
-	results/TF/reports/summary_TF_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
-
-- Summary table:: 
-	
-	results/combined/reports/summary_mapping_stats_<analysis_name>_TF.txt
-
-- Plot::
-	
-	results/combined/plots/mapping_stats_<analysis_name>_TF.pdf
-
-(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
-
-
-Peak metrics
-++++++++++++
-
-- Data for each sample::
-
-	results/TF/reports/summary_TF_peak_stats_<dat_type>__<line>__<tissue>__<sample_type>__<ref_genome>.txt
-
-- Summary table:: 
-
-	results/combined/reports/summary_peak_stats_<analysis_name>_TF.txt
-
-- Plot:: 
-
-	results/combined/plots/peak_stats_<analysis_name>_TF.pdf
 
 .. _fig-peak-stats:
 
 - Example:
 
 .. figure:: images/peak_stats_epicc_TF.png
-   :alt: peak_stats_epicc_TF
+   :alt: peak_stats_epicc_ChIP
    :align: center
 
    Histogram of peak metrics
@@ -220,11 +130,11 @@ Peak metrics
 Fingerprints
 ++++++++++++
 
-Performed with Deeptools.
+Performed with deeptools.
 
-- Plot for each biological replicate:: 
+- Plot for each biological replicate::
 
-	results/ChIP/plots/Fingerprint__final__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.png
+	results/ChIP/plots/Fingerprint__final__<Sample_ID>.png
 
 .. _fig-fingerprint:
 
@@ -234,17 +144,17 @@ Performed with Deeptools.
    :alt: Fingerprint__final__TF_SUVH1__Col0__suvh1.1__IP__Rep1__ColCEN
    :align: center
 
-   Fingerprint plot comparing an IP to its Input
+   Fingerprint plot comparing an IP to its control
 
 
 Irreproducible Discovery Rate
-+++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++
 
 Performed with IDR.
 
 - Plot for pairs of biological replicates::
 
-	results/ChIP/plots/idr_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate1>_vs_<replicate2>__<ref_genome>.<narrow|broad>Peak.png
+	results/ChIP/plots/idr_<Read_layout>__<Sample_ID>__<ref_genome>.<narrow|broad>Peak.png
 
 .. _fig-idr:
 
@@ -261,15 +171,15 @@ Performed with IDR.
 Motifs
 ++++++
 
-Performed with the MEME suite.
+Performed with the MEME suite. Available for ``ChIP_narrow`` samples (TF peaks).
 
-- Full output from selected peaks (and idr peaks if available) for each sample::
+- Full output from selected peaks (and IDR peaks if available) for each sample::
 
-	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/
+	results/ChIP/motifs/selected_peaks__<Sample_ID>__<ref_genome>/meme/
 
-- which includes:: 
+- HTML summary::
 
-	results/TF/motifs/selected_peaks__<data_type>__<line>__<tissue>__<sample_type>__<ref_genome>/meme/meme_out/meme.html
+	results/ChIP/motifs/selected_peaks__<Sample_ID>__<ref_genome>/meme/meme_out/meme.html
 
 - Example:
 
@@ -277,27 +187,27 @@ Performed with the MEME suite.
    :alt: meme
    :align: center
 
-   Screenshot of HMTL output from meme
+   Screenshot of HTML output from MEME
 
-(the actual output is in html format, and others)
+(the actual output is in HTML format, among others)
 
 
 Upset Plot
 ++++++++++
 
-Perfomed with ComplexUpset.
+Performed with ComplexUpset.
 
-- Table of combined peaks for all TF ChIP-seq samples in the analysis::
+- Table of combined peaks for all ChIP samples in the analysis::
 
-	results/combined/bedfiles/combined_peaks__TF__<analysis_name>__<ref_genome>.bed
+	results/combined/bedfiles/combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
 
-- Table of combined peaks for all TF ChIP-seq samples in the analysis annotated based on the closest gene::
+- Annotated by closest gene::
 
-	results/combined/bedfiles/annotated__combined_peaks__TF__<analysis_name>__<ref_genome>.bed
+	results/combined/bedfiles/annotated__combined_peaks__ChIP__<analysis_name>__<ref_genome>.bed
 
 - Upset plot::
 
-	results/combined/plots/Upset_combined_peaks__TF__<analysis_name>__<ref_genome>.pdf
+	results/combined/plots/Upset_combined_peaks__ChIP__<analysis_name>__<ref_genome>.pdf
 
 (see :ref:`Combined Output <fig-upset-peaks>` for an example)
 
@@ -312,15 +222,15 @@ Output tree
 ::
 
 	RNA/
-	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-	├── DEG/ # Differential Expression Analysis results. Contains count tables, list of differential expression genes for all pairwise comparisons, gene expression tables and RData object for plotting gene expression (see `usage - plotting differential expression`)
+	├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
+	├── DEG/	# Differential expression analysis results: count tables, DEG lists for all pairwise comparisons, expression tables, and RData object for expression plotting
 	├── fastq/	# Processed FASTQ files
-	├── GO/	# Gene Ontology Analysis results (optional). Contains GO terms enriched in sets of DEGs uniquely UP- or DOWN-regulated in each sample, and in additional GO analysis (see `usage - GO analysis`)
+	├── GO/		# Gene Ontology analysis results (optional): GO terms enriched in DEGs uniquely UP- or DOWN-regulated in each sample, and in additional GO analyses
 	├── logs/	# Log files
-	├── mapped/	# Mapped reads (bam) (and STAR output files)
-	├── plots/	# Expression and GO analysis (optional)
-	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and peak statistics (output from STAR and samtools)
-	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample
+	├── mapped/	# Mapped reads (BAM) and STAR output files
+	├── plots/	# Expression and GO analysis plots (optional)
+	├── reports/	# QC reports (fastp/Cutadapt) and summary of mapping statistics (STAR, samtools)
+	└── tracks/	# Bigwigs: plus and minus strand CPM values for each replicate and merged replicates per sample
 
 
 Mapping metrics
@@ -328,17 +238,17 @@ Mapping metrics
 
 - Data for each sample::
 
-	results/RNA/reports/summary_RNA_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+	results/RNA/reports/summary_RNA_<Read_layout>_mapping_stats_<Sample_ID>.txt
 
-- Summary table:: 
-	
+- Summary table::
+
 	results/combined/reports/summary_mapping_stats_<analysis_name>_RNA.txt
 
 - Plot::
-	
+
 	results/combined/plots/mapping_stats_<analysis_name>_RNA.pdf
 
-(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example) 
+(see :ref:`histone/TF ChIP-seq <fig-mapping-stats>` for an example) 
 
 
 Differential Expression analysis
@@ -348,7 +258,7 @@ Counts from STAR; analysis performed with EdgeR.
 
 - Count data for each RNAseq sample::
 
-	results/RNA/DEG/counts__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.tab
+	results/RNA/DEG/counts__<Sample_ID>.tab
 
 - Summary tables for all RNAseq samples used for the analysis:: 
 	
@@ -358,8 +268,12 @@ Counts from STAR; analysis performed with EdgeR.
 
 - Output tables of differentially expressed genes (DEG) for each pairwise comparison:: 
 	
-	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # all genes in logFC sample1/sample2 and their differential statistics
-	results/RNA/DEG/DEG_<analysis_name>__<ref_genome>__<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only DEGs
+	results/RNA/DEG/FC_<analysis_name>__<ref_genome>__<levels_label_1>_vs_<levels_label_2>.txt # all genes in logFC sample1/sample2 and their differential statistics
+	results/RNA/DEG/DEG_<analysis_name>__<ref_genome>__<levels_label_1>_vs_<levels_label_2>.txt # only DEGs
+
+  Each ``<levels_label>`` is the ``__``-joined sequence of factor values from the
+  sample sheet ``Levels`` column (e.g. ``Col0__seedling`` for
+  ``genotype:Col0,tissue:seedling``).
 
 - Output summary tables of DEGs for all pairwise comparisons:: 
 
@@ -432,21 +346,21 @@ Performed with rrvgo and TopGO.
 
 - List of Gene Ontology (GO) terms and corresponding Gene IDs (GIDs) enriched in the DEGs uniquely UP- and DOWN-regulated in each sample::
 
-	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_BP_GOs.txt # Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
-	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_BP_GIDs.txt # genes in the Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
-	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_MF_GOs.txt # Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample
-	results/RNA/GO/topGO_DOWN_in_<line>__<tissue>_MF_GIDs.txt # genes in the Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample
-	results/RNA/GO/topGO_UP_in_<line>__<tissue>_BP_GOs.txt # Biological Process (BP) GO terms enriched in genes only UP-regulated in this sample
-	results/RNA/GO/topGO_UP_in_<line>__<tissue>_BP_GIDs.txt # genes in the Biological Process (BP) GO terms enriched in genes only UP-regulated in this sample 
-	results/RNA/GO/topGO_UP_in_<line>__<tissue>_MF_GOs.txt # Molecular Function (MF) GO terms enriched in genes only UP-regulated in this sample
-	results/RNA/GO/topGO_UP_in_<line>__<tissue>_MF_GIDs.txt # genes in the Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample 
+	results/RNA/GO/topGO_DOWN_in_<levels_label>_BP_GOs.txt # Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
+	results/RNA/GO/topGO_DOWN_in_<levels_label>_BP_GIDs.txt # genes in the Biological Process (BP) GO terms enriched in genes only DOWN-regulated in this sample 
+	results/RNA/GO/topGO_DOWN_in_<levels_label>_MF_GOs.txt # Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample
+	results/RNA/GO/topGO_DOWN_in_<levels_label>_MF_GIDs.txt # genes in the Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample
+	results/RNA/GO/topGO_UP_in_<levels_label>_BP_GOs.txt # Biological Process (BP) GO terms enriched in genes only UP-regulated in this sample
+	results/RNA/GO/topGO_UP_in_<levels_label>_BP_GIDs.txt # genes in the Biological Process (BP) GO terms enriched in genes only UP-regulated in this sample 
+	results/RNA/GO/topGO_UP_in_<levels_label>_MF_GOs.txt # Molecular Function (MF) GO terms enriched in genes only UP-regulated in this sample
+	results/RNA/GO/topGO_UP_in_<levels_label>_MF_GIDs.txt # genes in the Molecular Function (MF) GO terms enriched in genes only DOWN-regulated in this sample 
 	
 - Corresponding plots::
 
-	results/RNA/plots/topGO_DOWN_in_<line>__<tissue>_BP_treemap.pdf # Treemap of simplified BP terms in DOWN-regulated genes in this sample
-	results/RNA/plots/topGO_DOWN_in_<line>__<tissue>_MF_treemap.pdf # Treemap of simplified MF terms in DOWN-regulated genes in this sample
-	results/RNA/plots/topGO_UP_in_<line>__<tissue>_BP_treemap.pdf # Treemap of simplified BP terms in UP-regulated genes in this sample
-	results/RNA/plots/topGO_UP_in_<line>__<tissue>_MF_treemap.pdf # Treemap of simplified MF terms in UP-regulated genes in this sample
+	results/RNA/plots/topGO_DOWN_in_<levels_label>_BP_treemap.pdf # Treemap of simplified BP terms in DOWN-regulated genes in this sample
+	results/RNA/plots/topGO_DOWN_in_<levels_label>_MF_treemap.pdf # Treemap of simplified MF terms in DOWN-regulated genes in this sample
+	results/RNA/plots/topGO_UP_in_<levels_label>_BP_treemap.pdf # Treemap of simplified BP terms in UP-regulated genes in this sample
+	results/RNA/plots/topGO_UP_in_<levels_label>_MF_treemap.pdf # Treemap of simplified MF terms in UP-regulated genes in this sample
 
 If not enough terms are enriched, these plots might not be created.
 
@@ -471,13 +385,13 @@ Output tree
 ::
 
 	sRNA/
-	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-	├── clusters/ # Clusters and differential analysis when all samples are analyzed together, on de novo identified clusters, on all genes and on all TEs (optional)
+	├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
+	├── clusters/	# Clusters and differential analysis for all samples together: de novo clusters, all genes, and all TEs (optional)
 	├── fastq/	# Processed FASTQ files
 	├── logs/	# Log files
-	├── mapped/	# Subfolders of ShortStack output for each replicate
-	├── reports/	# QC reports (output from Cutadapt) and summary of size statistics
-	└── tracks/	# Track files (bigwigs); plus and minus strand (still in positive values) CPM for each replicate and merged all replicates per sample for each size chosen (default, 21, 22, 23 and 24nt)
+	├── mapped/	# ShortStack output subfolders for each replicate
+	├── reports/	# QC reports (fastp/Cutadapt) and size statistics
+	└── tracks/	# Bigwigs: plus and minus strand CPM for each replicate and merged replicates per sample, for each size class (default, 21, 22, 23, 24 nt)
 
 
 Mapping statistics
@@ -485,7 +399,7 @@ Mapping statistics
 
 - Data for each sample::
 
-	results/sRNA/reports/sizes_stats__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+	results/sRNA/reports/sizes_stats__<Sample_ID>.txt
 
 - Summary table:: 
 	
@@ -513,8 +427,8 @@ Counts from ShortStack; analysis performed with EdgeR.
 
 - ShortStack analysis on each replicate::
 
-	results/mapped/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>/ # output folder from ShortStack with all cluster results and alignement files
-	results/mapped/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>/clusters.bed # simplified bed-file of clusters for downstream analyses
+	results/sRNA/mapped/<Sample_ID>/       # ShortStack output folder with cluster results and alignment files
+	results/sRNA/mapped/<Sample_ID>/clusters.bed  # simplified BED file of clusters for downstream analyses
 
 - For all samples in the analysis, two runs will be performed by default (three with the optional TE analysis), which will create the same output
 - The full ShortStack output will be located in these folders::
@@ -527,8 +441,8 @@ Counts from ShortStack; analysis performed with EdgeR.
 
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/counts_for_edgeR.txt # Count data for edgeR analysis
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/samples_for_edgeR.txt # Table of samples information for edgeR analysis
-	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/FC_<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # log Fold Change between each pairs of samples at all clusters
-	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/DEG_<line_sample1>__<tissue_sample1>_vs_<line_sample2>__<tissue_sample2>.txt # only differentially regulated clusters between each pair of samples
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/FC_<levels_label_1>_vs_<levels_label_2>.txt # log Fold Change between each pairs of samples at all clusters
+	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/DEG_<levels_label_1>_vs_<levels_label_2>.txt # only differentially regulated clusters between each pair of samples
 	results/clusters/<analysis_name>__<ref_genome>__on_new_clusters/unique_DEGs.txt # list of clusters uniquely regulated in each sample
 
 - For each differential analysis (e.g. on new clusters), similar output than for RNAseq DEGs will be generated, following the naming pattern ``sRNA_<analysis_name>_<ref_genome>__on_new_clusters`` pattern. It includes::
@@ -577,14 +491,14 @@ Output tree
 ::
 
 	mC/
-	├── chkpts/	# Empty checkpoint files used for pipeline logic. Deleting them will trigger rerunning the corresponding analysis
-	├── DMRs/ # Differential Methylated Regions results. Contains list of DMRs for each context in pairwise comparisons and summary tables
+	├── chkpts/	# Checkpoint files; delete to trigger rerunning the corresponding analysis
+	├── DMRs/	# Differentially methylated regions: DMR lists per context for pairwise comparisons and summary tables
 	├── fastq/	# Processed FASTQ files
 	├── logs/	# Log files
-	├── mapped/	# Mapped reads (bam)
-	├── methylcall/	# CX report (Bismark output) of methylation calls per cytosines
-	├── reports/	# QC reports (output from Cutadapt) and summary of mapping statistics and methylation statistics (output from Bismark)
-	└── tracks/	# Track files (bigwigs); strand-specific and merged methylation values (from 0 to 100%) for each replicate and all replicates of each sample merged
+	├── mapped/	# Mapped reads (BAM)
+	├── methylcall/	# CX report (Bismark-compatible) of methylation calls per cytosine
+	├── reports/	# QC reports (fastp/Cutadapt) and mapping/methylation statistics (Bismark)
+	└── tracks/	# Bigwigs: strand-specific and merged methylation percentage (0–100 %) for each replicate and per-sample merged; one set per active methylation_context
 
 
 Mapping metrics
@@ -592,17 +506,17 @@ Mapping metrics
 
 - Data for each sample::
 
-	results/mC/reports/summary_mC_<paired>_mapping_stats_<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.txt
+	results/mC/reports/summary_mC_<Read_layout>_mapping_stats_<Sample_ID>.txt
 
-- Summary table:: 
-	
+- Summary table::
+
 	results/combined/reports/summary_mapping_stats_<analysis_name>_mC.txt
 
 - Plot::
-	
+
 	results/combined/plots/mapping_stats_<analysis_name>_mC.pdf
 
-(see :ref:`histone ChIP-seq <fig-mapping-stats>` for an example)
+(see :ref:`ChIP-seq <fig-mapping-stats>` for an example)
 
 
 Methylation Calls
@@ -612,25 +526,29 @@ Performed with Bismark
 
 - Methylation data for each sample::
 
-	results/mC/reports/final_report_<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.html # html summary output from Bismark
-	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.cytosine_context_summary.txt # methylation level per sequence context output from Bismark
-	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.M-bias.txt # M-bias data output from Bismark
-	results/mC/reports/<paired>__<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated_splitting_report.txt # Methylation extraction statistics output from Bismark
-	results/mC/methylcall/<data_type>__<line>__<tissue>__<sample_type>__<replicate>__<ref_genome>.deduplicated.CX_report.txt.gz # Table with methylation values and coverage for each cytosine of the genome
+	results/mC/reports/final_report_<Read_layout>__<Sample_ID>.html              # HTML summary from Bismark
+	results/mC/reports/<Read_layout>__<Sample_ID>.deduplicated.cytosine_context_summary.txt  # methylation level per sequence context (Bismark)
+	results/mC/reports/<Read_layout>__<Sample_ID>.deduplicated.M-bias.txt        # M-bias statistics (Bismark)
+	results/mC/reports/<Read_layout>__<Sample_ID>.deduplicated_splitting_report.txt  # extraction statistics (Bismark)
+	results/mC/methylcall/<Sample_ID>.deduplicated.CX_report.txt.gz              # per-cytosine methylation values and coverage
 
 
-Differential Methylated Regions analysis
-++++++++++++++++++++++++++++++++++++++++
+Differentially methylated regions analysis
+++++++++++++++++++++++++++++++++++++++++++
 
-Performed with DMRcaller
+Performed with DMRcaller. One set of DMR output files is produced for each
+context listed in ``methylation_contexts`` (default: CG, CHG, CHH; see
+:ref:`Configuration <configuration>` for details).
 
-- List of differentially methylated regions (DMRs) in each sequence context and summary tables for each pairwise comparison of samples::
+- BED files of DMRs in each context for each pairwise comparison::
 
-	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CG_DMRs.txt # Bed file of DMRs in the CG context between sample1 and sample2 including methylation values and statistics (if there are any CG DMRs)
-	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CHG_DMRs.txt # Bed file of DMRs in the CHG context between sample1 and sample2 including methylation values and statistics (if mC context is all and there are any CHG DMRs)
-	results/mC/DMRs/<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__CHH_DMRs.txt # Bed file of DMRs in the CHH context between sample1 and sample2 including methylation values and statistics (if mC context is all and there are any CHH DMRs)
+	results/mC/DMRs/<SampleID_1>__vs__<SampleID_2>__CG_DMRs.txt   # DMRs in the CG context (if any)
+	results/mC/DMRs/<SampleID_1>__vs__<SampleID_2>__CHG_DMRs.txt  # DMRs in the CHG context (if context is active and DMRs exist)
+	results/mC/DMRs/<SampleID_1>__vs__<SampleID_2>__CHH_DMRs.txt  # DMRs in the CHH context (if context is active and DMRs exist)
 
-	results/mC/DMRs/summary__<data_type_sample1>__<line_sample1>__<tissue_sample1>__<sample_type_sample1>__<ref_genome_sample1>__vs__<data_type_sample2>__<line_sample2>__<tissue_sample2>__<sample_type_sample2>__<ref_genome_sample2>__DMRs.txt # summary table with the number of Hyper- and Hypo-methylated regions in each sequence context between sample1 and sample2
+- Summary table for each pairwise comparison::
+
+	results/mC/DMRs/summary__<SampleID_1>__vs__<SampleID_2>__DMRs.txt  # Counts of hyper- and hypo-methylated regions per context
 
 
 Combined Output

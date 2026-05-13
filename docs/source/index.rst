@@ -3,12 +3,12 @@
 Welcome to EPICC documentation!
 ===================================
 
-A Snakemake-based pipeline for analyzing and integrating various types of (epi)genomics datasets, including histone and transcription factor ChIP-seq, RNA-seq, RAMPAGE, small RNA-seq, and methylC-seq.
+A Snakemake-based pipeline for analyzing and integrating various types of (epi)genomics datasets, including histone and transcription factor ChIP-seq, CUT&RUN, CUT&Tag, ATAC-seq, RNA-seq, RAMPAGE, small RNA-seq, whole-genome bisulfite sequencing, and direct methylation from long-read sequencing.
 
 Overview
 --------
 
-EpigeneticButton is a comprehensive pipeline that processes and analyzes multiple types of genomics data. It provides an automated workflow for:
+EPICC (Epigenetic Pipeline for Integrative Chromatin Characterization) is a comprehensive pipeline that processes and analyzes multiple types of (epi)genomics data. It provides an automated workflow for:
 
 - Data preprocessing and quality control
 - Read mapping and alignment
@@ -20,16 +20,20 @@ Features
 
 - **Multiple Data Types Support**:
 
-  - Histone ChIP-seq
-  - Transcription Factor ChIP-seq
+  - Histone ChIP-seq (broad and narrow peaks)
+  - Transcription factor ChIP-seq
+  - CUT&RUN (broad and narrow peak variants)
+  - CUT&Tag (broad and narrow peak variants)
+  - ATAC-seq
   - RNA-seq
+  - RAMPAGE
   - small RNA-seq
-  - MethylC-seq (mC)
-  - RAMPAGE *\*in development*
+  - Whole-genome bisulfite sequencing (MethylC-seq): WGBS, WGBS_nd, PBAT, EMseq
+  - Direct methylation from long-read sequencing (dmC): Oxford Nanopore, PacBio
 
 - **Automated Analysis**:
 
-  - Reference genome preparation  
+  - Reference genome preparation
   - Sample-specific processing
   - Data type-specific analysis
   - Combined analysis across samples
@@ -38,7 +42,7 @@ Features
 
 - **Flexible Configuration**:
 
-  - App to validate configuration options: `epicc-builder <https://epicc-builder.streamlit.app>`__
+  - Self-contained local HTML builder (``tools/epicc-builder.html``) to build and validate sample sheets and options files — open directly in a browser, no internet connection required
   - Customizable mapping parameters
   - Configurable analysis options
   - Resource management
