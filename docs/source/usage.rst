@@ -101,7 +101,7 @@ TMPDIR routing
 ==============
 
 By default, every pipeline job sets ``TMPDIR`` to a per-job subdirectory under
-``{output_dir}/.tmp/`` (e.g. ``results/.tmp/<SLURM_JOB_ID>``). Tools that
+``{output_dir}/.tmp/`` (e.g. ``results/.tmp/<SLURM_JOB_ID>.<PID>``). Tools that
 spill large temporary data through ``TMPDIR`` — such as ``samtools sort``,
 STAR, ``fasterq-dump``, and deeptools — therefore write to the project
 filesystem rather than the cluster's ``/tmp``. This avoids ``ENOSPC`` errors
