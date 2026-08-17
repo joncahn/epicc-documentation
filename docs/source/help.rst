@@ -124,32 +124,43 @@ Add this file to the corresponding reference genome ``gene_info_file`` in the co
   B73_v5:
     gene_info_file: data/B73_v5_genes_info.tab
 
-- STEP 4: Run the epigenetic button once only to generate the GO database::
+- STEP 4: Run the pipeline once only to generate the GO database:
 
-    snakemake --cores 1 genomes/<ref_genome>/GO/<dbname> 
+.. code-block:: bash
 
-for example::
+   epicc run --samples config/my_samples.tsv -- genomes/<ref_genome>/GO/<dbname>
 
-  snakemake --cores 1 genomes/ColCEN/GO/org.Zmays.eg.db
+For example (Arabidopsis thaliana, ColCEN assembly):
+
+.. code-block:: bash
+
+   epicc run --samples config/my_samples.tsv -- genomes/ColCEN/GO/org.Athaliana.eg.db
+
+The database name follows the AnnotationForge convention
+``org.<G><species>.eg.db``, where ``<G>`` is the first letter of the genus
+(capitalized) and ``<species>`` is the species name in lowercase
+(e.g. ``org.Athaliana.eg.db`` for *Arabidopsis thaliana*).
 
 - STEP 4b: Create the GO database manually
 
-Run the script: ``workflow/scripts/R_build_GO_database.R``, with the following arguments::
+Run the script ``workflow/scripts/R_build_GO_database.R`` with the following arguments:
 
-  script="scripts/R_build_GO_database.R"
-  infofile="B73_v5_infoGO.tab" # replace with appopriate `gaf_file` from STEP1
-  genefile="B73_v5_genes_info.tab # replace with appropriate `gene_info_file` from STEP2
-  ref_genome="B73_v5" # replace with corresponding genome reference (same than on the sample file)
-  genus="Zea" # replace with corresponding genus (conventionally first letter is capitalized)
-  species="mays" # replace with corresponding species (conventionally lowerscript)
-  ncbiID="4577" # find value corresponding to the species at NCBI
+.. code-block:: bash
 
-  Rscript ${script} ${infofile} ${genefile} ${ref_genome} ${genus} ${species} ${ncbiID}
+   script="workflow/scripts/R_build_GO_database.R"
+   infofile="B73_v5_infoGO.tab"        # replace with appropriate gaf_file from STEP 1
+   genefile="B73_v5_genes_info.tab"    # replace with appropriate gene_info_file from STEP 2
+   ref_genome="B73_v5"                 # must match the Genome column in the sample sheet
+   genus="Zea"                         # first letter capitalized
+   species="mays"                      # lowercase
+   ncbiID="4577"                       # NCBI taxonomy ID for the species
 
-An replace the `go_database` entry in the config file for the corresponding species:: 
+   Rscript ${script} ${infofile} ${genefile} ${ref_genome} ${genus} ${species} ${ncbiID}
 
-  mays:
-    go_database: org.Zmays.eg.db # where dbanme="org.<firstlettergenus><species>.eg.db"
+The database is installed into ``genomes/<ref_genome>/GO/`` automatically.
+The GO database name is auto-derived as ``org.<G><species>.eg.db``
+(e.g. ``org.Zmays.eg.db`` for *Zea mays*) and does not need to be added
+to the options file manually.
                                                                                                                         
                                                                                                                         
                                                                                                                         
